@@ -26,23 +26,23 @@ const Home = () => {
     }
     return (
         <div>
-            <div className="flex items-center gap-4 p-3">
-                {filterCategories.map((item, idx) => (
-                    <div key={item.name}>
-                        <Button onClick={() => setCategory(item.name)} variant={category === item.name ? "default" : "outline"} className="rounded-full"> {item.text} </Button>
+            <div className="flex border-t mt-4">
+                <div className="max-w-[50%] flex-1 border-r">
+                    <div className="flex items-center gap-4 p-3">
+                        {filterCategories.map((item, idx) => (
+                            <div key={item.name}>
+                                <Button onClick={() => setCategory(item.name)} variant={category === item.name ? "default" : "outline"} className="rounded-full"> {item.text} </Button>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <div className="flex gap-5">
-                <div className="max-w-[50%] flex-1">
                     <AssetTable />
                 </div>
-                <div className="max-w-[50%] flex-1">
+                <div className="max-w-[50%] px-4 flex-1">
                     <StockChart />
-                    <div className="flex gap-5 items-center">
+                    <div className="flex gap-5 ml-3 items-center">
                         <div>
                             <Avatar>
-                                <AvatarImage src="https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"></AvatarImage>
+                                <AvatarImage className="h-[50px]" src="https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"></AvatarImage>
                             </Avatar>
                         </div>
                         <div>
@@ -54,7 +54,7 @@ const Home = () => {
                                 <p className="text-gray-400"> Bitcoin </p>
                             </div>
                             <div className="flex items-end gap-2">
-                                <p className="text-xl font-bold">
+                                <p className="text-lg font-bold">
                                     5464
                                 </p>
                                 <p className="text-red-600">
@@ -107,13 +107,13 @@ const Home = () => {
                         </div>
                     </div>
                 )}
-                
+
                 <div onClick={() => setIsBotOpen(!isBotOpen)} className="relative w-[10rem] cursor-pointer group">
                     <Button className="w-full h-[3rem] gap-2 items-center">
-                        <MessageCircle 
-                            size={30} 
+                        <MessageCircle
+                            size={30}
                             className="fill-[#1e293b] -rotate-90
-                            stroke-none group-hover:fill-[#1a1a1a]" 
+                            stroke-none group-hover:fill-[#1a1a1a]"
                         />
                         <span className="text-2xl"> Chat Bot </span>
                     </Button>

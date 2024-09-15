@@ -116,9 +116,10 @@ const StockChart = () => {
     }
     return (
         <div>
-            <div className="space-x-3">
+            <div className="space-x-3 flex p-3">
                {timeSeries.map((item) => (
                 <Button 
+                    className="rounded-full"
                     key={item.label}
                     variant={activeLabel === item.label ? "" : "outline"}
                     onClick={() => setActiveLabel(item.label)}
