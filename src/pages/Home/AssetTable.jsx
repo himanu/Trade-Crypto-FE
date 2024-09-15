@@ -11,7 +11,7 @@ import {
 
 const AssetTable = () => {
     return (
-        <Table className="w-[50%]">
+        <Table>
             <TableHeader>
                 <TableRow>
                     <TableHead className="w-[100px]">Coin</TableHead>
