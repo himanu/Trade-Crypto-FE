@@ -10,6 +10,9 @@ import WithDrawal from './pages/Withdrawl'
 import PaymentDetails from './pages/PaymentDetails'
 import StockDetails from './pages/StockDetails'
 import WatchList from './pages/Watchlist'
+import Profile from './pages/Profile'
+import SearchCoin from './pages/SearchCoin'
+import NotFound from './pages/NotFound'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +29,10 @@ function App() {
         <Route path="/payment_details" element={<PaymentDetails />} />
         <Route path="/stock_details" element={<StockDetails />} />
         <Route path="/watchlist" element={<WatchList />} />
+        <Route path="/market/:id" element={<StockDetails />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/search" element={<SearchCoin />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )

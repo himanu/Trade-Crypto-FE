@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet"
 import { ActivityLogIcon, BookmarkIcon, DashboardIcon, DragHandleHorizontalIcon, ExitIcon, HomeIcon, MagnifyingGlassIcon, PersonIcon } from "@radix-ui/react-icons";
 import { CreditCardIcon, LandmarkIcon, WalletIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const sideBarMenu = [
     { name: "Home", path: "/", icon: <HomeIcon className="h-6 w-6" /> },
@@ -18,15 +19,16 @@ const sideBarMenu = [
     { name: "Watchlist", path: "/watchlist", icon: <BookmarkIcon className="h-6 w-6" /> },
     { name: "Activity", path: "/activity", icon: <ActivityLogIcon className="h-6 w-6" /> },
     { name: "Wallet", path: "/wallet", icon: <WalletIcon className="h-6 w-6" /> },
-    { name: "Payment Details", path: "/payment-details", icon: <LandmarkIcon className="h-6 w-6" /> },
-    { name: "Withdrawl", path: "/withdrawl", icon: <CreditCardIcon className="h-6 w-6" /> },
+    { name: "Payment Details", path: "/payment_details", icon: <LandmarkIcon className="h-6 w-6" /> },
+    { name: "Withdrawl", path: "/withdrawal", icon: <CreditCardIcon className="h-6 w-6" /> },
     { name: "Profile", path: "/profile", icon: <PersonIcon className="h-6 w-6" /> },
     { name: "Logout", path: "/", icon: <ExitIcon className="h-6 w-6" /> }
 ]
 
 const Navbar = () => {
+    const navigate = useNavigate();
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-4">
             <div className="flex gap-7 items-center">
                 <Sheet>
                     <SheetTrigger>
@@ -50,7 +52,7 @@ const Navbar = () => {
                             </SheetTitle>
                         </SheetHeader>
                         {sideBarMenu.map((item, idx) => (
-                            <SheetClose className="">
+                            <SheetClose onClick={() => navigate(item.path)}>
                                 <Button
                                     variant="outline"
                                     className="w-full  flex item-center py-6 gap-4"

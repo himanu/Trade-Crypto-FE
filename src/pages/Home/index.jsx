@@ -26,7 +26,7 @@ const Home = () => {
     }
     return (
         <div>
-            <div className="flex border-t mt-4">
+            <div className="flex border-t">
                 <div className="max-w-[50%] flex-1 border-r">
                     <div className="flex items-center gap-4 p-3">
                         {filterCategories.map((item, idx) => (
