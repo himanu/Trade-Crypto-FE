@@ -1,4 +1,5 @@
 import { AvatarImage, Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
@@ -8,22 +9,27 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 
 const WatchList = () => {
+    const handleRemoveFromWatchlist = (item) => {
+
+    }
     return (
         <div className="p-5 lg:px-20">
             <h1 className="pb-5 font-bold text-3xl">
                 Watchlist
             </h1>
-            <Table>
+            <Table className="border">
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">Asset</TableHead>
+                        <TableHead className="py-5">Coin</TableHead>
+                        <TableHead>SYMBOL</TableHead>
+                        <TableHead>VOLUME</TableHead>
+                        <TableHead>MARKET CAP</TableHead>
+                        <TableHead>24h</TableHead>
                         <TableHead>PRICE</TableHead>
-                        <TableHead>UNIT</TableHead>
-                        <TableHead>CHANGE</TableHead>
-                        <TableHead>CHANGE%</TableHead>
-                        <TableHead className="text-right">VALUE</TableHead>
+                        <TableHead className="text-right text-red-600">REMOVE</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -39,7 +45,12 @@ const WatchList = () => {
                             <TableCell className="text-left"> 12345234</TableCell>
                             <TableCell className="text-left"> 123456788</TableCell>
                             <TableCell className="text-left"> 0.034% </TableCell>
-                            <TableCell className="text-right">$250 .00</TableCell>
+                            <TableCell>$250 .00</TableCell>
+                            <TableCell className="text-right">
+                                <Button variant="ghost" size="icon" className="h-10 w-10" onClick={() => handleRemoveFromWatchlist(item)}> 
+                                    <BookmarkFilledIcon className="w-6 h-6" />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
