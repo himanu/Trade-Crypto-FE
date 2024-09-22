@@ -24,28 +24,28 @@ const Auth = () => {
             {location.pathname== "/signup" ? (
               <section className='w-[80%] lg:w-[35%]'>
                 <Signup />
-                <div className='flex items-center justify-center'>
+                <div className='flex mt-2 gap-2 items-center justify-center'>
                   <span> Already have account? </span>
-                  <Button onClick={() => navigate("/signin")} variant="ghost">
+                  <Button onClick={() => navigate("/signin")} variant="secondary">
                     Sign In
                   </Button>
                 </div>
               </section>) : location.pathname== "/forgot-password" ? (
-              <section>
+              <section className='w-[80%] lg:w-[35%]'>
                   <Forgotpassword />
-                  <div className='flex items-center justify-center'>
-                    <span> Sign In </span>
-                    <Button onClick={() => navigate("/signin")} variant="ghost">
+                  <div className='flex mt-2 gap-2 items-center justify-center'>
+                    <span> Sign In?</span>
+                    <Button onClick={() => navigate("/signin")} variant="secondary">
                       Sign In
                     </Button>
                   </div>
               </section>
             ) : (
-              <section>
+              <section className='w-[80%] lg:w-[35%]'>
                 <Signin />
-                <div className='flex items-center justify-center'>
+                <div className='flex mt-2 gap-2 items-center justify-center'>
                   <span> Don't have account? </span>
-                  <Button onClick={() => navigate("/signup")} variant="ghost">
+                  <Button onClick={() => navigate("/signup")} variant="secondary">
                     Sign Up
                   </Button>
                 </div>

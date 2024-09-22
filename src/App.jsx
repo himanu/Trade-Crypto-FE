@@ -38,6 +38,9 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>}
+    <a href="https://www.linkedin.com/in/himanshu-yadav-7554161b2/" target='_blank' className="z-[100] mr-4 made-with-love hover:text-white">
+      Made with ❤️ by Himanshu
+    </a>
     </>
   )
 }

@@ -11,3 +11,12 @@
 .read-the-docs {
   color: #888;
 }
+.made-with-love {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 18px;
+  color: #555;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
