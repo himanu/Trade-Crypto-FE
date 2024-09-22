@@ -13,12 +13,15 @@ import WatchList from './pages/Watchlist'
 import Profile from './pages/Profile'
 import SearchCoin from './pages/SearchCoin'
 import NotFound from './pages/NotFound'
+import Auth from './pages/Auth/Auth'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+    <Auth />
+    { false && <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -34,6 +37,7 @@ function App() {
         <Route path="/search" element={<SearchCoin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+    </div>}
     </>
   )
 }

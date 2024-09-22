@@ -20,7 +20,7 @@ const sideBarMenu = [
     { name: "Activity", path: "/activity", icon: <ActivityLogIcon className="h-6 w-6" /> },
     { name: "Wallet", path: "/wallet", icon: <WalletIcon className="h-6 w-6" /> },
     { name: "Payment Details", path: "/payment_details", icon: <LandmarkIcon className="h-6 w-6" /> },
-    { name: "Withdrawl", path: "/withdrawal", icon: <CreditCardIcon className="h-6 w-6" /> },
+    { name: "Withdrawal", path: "/withdrawal", icon: <CreditCardIcon className="h-6 w-6" /> },
     { name: "Profile", path: "/profile", icon: <PersonIcon className="h-6 w-6" /> },
     { name: "Logout", path: "/", icon: <ExitIcon className="h-6 w-6" /> }
 ]
