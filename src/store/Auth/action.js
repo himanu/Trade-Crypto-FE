@@ -1,6 +1,7 @@
 import axios from "axios"
 import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS } from "./actionTypes";
 import { jwtTokenStr } from "@/constants";
+import { toast } from "react-toastify";
 
 const baseUrl = "http://localhost:8082";
 export const register = (userData) => async (dispatch) => {
@@ -12,8 +13,10 @@ export const register = (userData) => async (dispatch) => {
         const user = response.data;
         console.log(user);
         dispatch({type: REGISTER_SUCCESS, payload: user});
+        toast.success("Signed Up Successfully!");
     } catch(error) {
         dispatch({type: REGISTER_FAILURE, payload: error.message});
+        toast.error(error?.response?.data ?? error?.message ?? "Something Went Wrong!");
         console.log("Error ", error);
     }
 }

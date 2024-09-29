@@ -1,11 +1,8 @@
 import React from 'react'
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
-import { DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { z } from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch } from 'react-redux'
 import { register } from '@/store/Auth/action'
 

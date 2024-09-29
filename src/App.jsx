@@ -16,7 +16,8 @@ import NotFound from './pages/NotFound'
 import Auth from './pages/Auth/Auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from './store/Auth/action'
-import { LoaderCircle, LoaderPinwheel } from 'lucide-react'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/ui/loader'
 import { jwtTokenStr } from './constants'
 
@@ -54,6 +55,10 @@ function App() {
     }
   }, [auth.user])
 
+  const hasLoader = () => {
+    return auth?.loading ?? false;
+  }
+
   console.log("auth1 ", auth);
   return (
     <>
@@ -70,6 +75,8 @@ function App() {
           }
         })}
       </Routes>
+      <ToastContainer />
+      {hasLoader() && <Loader />}
     </div>
     <a href="https://www.linkedin.com/in/himanshu-yadav-7554161b2/" target='_blank' className="z-[100] made-with-love hover:text-white">
       Made with ❤️ by Himanshu
