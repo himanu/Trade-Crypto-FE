@@ -1,7 +1,8 @@
 import axios from "axios"
-import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS } from "./actionTypes";
+import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS } from "./actionTypes";
+import { jwtTokenStr } from "@/constants";
 
-const baseUrl = "http://localhost:5454";
+const baseUrl = "http://localhost:8082";
 export const register = (userData) => async (dispatch) => {
     dispatch({
         type: REGISTER
@@ -28,6 +29,7 @@ export const login = (userData) => async (dispatch) => {
         const user = response.data;
         console.log(user);
         dispatch({type: LOGIN_SUCCESS, payload: user});
+        localStorage.setItem("token", user?.token)
     } catch(error) {
         dispatch({type: LOGIN_FAILURE, payload: error.message});
         console.log("Error ", error);
@@ -49,6 +51,14 @@ export const getUser = (jwt) => async (dispatch) => {
         dispatch({type: GET_USER_SUCCESS, payload: user});
     } catch(error) {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
-        console.log("Error ", error);
+        console.log("Error ", error.message);
     }
+}
+
+export const logoutUser = () => async (dispatch) => {
+    localStorage.removeItem(jwtTokenStr);
+    dispatch({
+        type: LOGOUT,
+        payload: {}
+    })
 }

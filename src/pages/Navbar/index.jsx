@@ -9,8 +9,10 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import { logoutUser } from "@/store/Auth/action";
 import { ActivityLogIcon, BookmarkIcon, DashboardIcon, DragHandleHorizontalIcon, ExitIcon, HomeIcon, MagnifyingGlassIcon, PersonIcon } from "@radix-ui/react-icons";
 import { CreditCardIcon, LandmarkIcon, WalletIcon } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const sideBarMenu = [
@@ -27,6 +29,14 @@ const sideBarMenu = [
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const handleClick = (path, name) => {
+        if (name === 'Logout') {
+            dispatch(logoutUser());
+            return;
+        }
+        navigate(path);
+    }
     return (
         <div className="flex justify-between items-center mb-4">
             <div className="flex gap-7 items-center">
@@ -52,7 +62,7 @@ const Navbar = () => {
                             </SheetTitle>
                         </SheetHeader>
                         {sideBarMenu.map((item, idx) => (
-                            <SheetClose onClick={() => navigate(item.path)}>
+                            <SheetClose onClick={() => handleClick(item.path, item.name)}>
                                 <Button
                                     variant="outline"
                                     className="w-full  flex item-center py-6 gap-4"

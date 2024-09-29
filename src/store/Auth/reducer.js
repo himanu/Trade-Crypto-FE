@@ -1,5 +1,4 @@
-const { act } = require("react");
-const { REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS } = require("./actionTypes");
+import { REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS } from "./actionTypes";
 
 const initialState = {
     user: null,
@@ -44,7 +43,8 @@ const authReducer = (state = initialState, action) => {
             return ({
                 ...state,
                 loading: false,
-                error: action.payload
+                error: action.payload,
+                user: null
             })
         case REGISTER_SUCCESS:
             return ({
@@ -58,7 +58,8 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: null,
-                user: action.payload
+                user: null,
+                jwt: action?.payload?.token ?? ""
             })
         case GET_USER_SUCCESS:
             return ({
@@ -66,6 +67,10 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
                 error: null,
                 user: action.payload
+            })
+        case LOGOUT:
+            return ({
+                ...initialState
             })
         default:
             return state;

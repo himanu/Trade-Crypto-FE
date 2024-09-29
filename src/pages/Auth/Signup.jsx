@@ -4,18 +4,25 @@ import { useForm } from 'react-hook-form'
 import { DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-
+import { z } from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useDispatch } from 'react-redux'
+import { register } from '@/store/Auth/action'
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const form = useForm({
     resolver: "",
     defaultValues: {
-      fullName: "",
+      username: "",
       email: "",
       password: ""
     }
   })
-  const onSubmit = () => {}
+  const onSubmit = (data) => {
+    console.log("data ", data);
+    dispatch(register(data));
+  }
   return (
     <div>
       <h1 className='text-xl font-bold text-center pb-4'> Sign Up</h1>
@@ -25,7 +32,7 @@ const Signup = () => {
         >
           <FormField
             control={form.control}
-            name="fullName"
+            name="username"
             render={({ field }) => (
               <FormItem>
                 <FormControl>

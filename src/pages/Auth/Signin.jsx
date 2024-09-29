@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useDispatch } from 'react-redux'
+import  { login } from "../../store/Auth/action";
 
 
 const SignIn = () => {
@@ -14,7 +16,10 @@ const SignIn = () => {
       password: ""
     }
   })
-  const onSubmit = () => {}
+  const dispatch = useDispatch();
+  const onSubmit = (data) => {
+    dispatch(login(data));
+  }
   return (
     <div>
       <h1 className='text-xl font-bold text-center pb-4'> Sign In</h1>

@@ -3,11 +3,12 @@ import "./Auth.css";
 import Signup from './Signup';
 import Signin from './Signin';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Forgotpassword from './Forgotpassword';
 
 const Auth = () => {
   const navigate = useNavigate();
+  const { type } = useParams();
   return (
     <div className='absolute top-0 left-0 w-[100vw] h-screen authContainer'>
       <div className='absolute top-0 right-0 left-0 bottom-0 bg-[#030712]
@@ -21,21 +22,21 @@ const Auth = () => {
             <h1 className='text-6xl font-bold pb-9'>
                 Trade Crypto
             </h1>
-            {location.pathname== "/signup" ? (
+            {type == "signup" ? (
               <section className='w-[80%] lg:w-[35%]'>
                 <Signup />
                 <div className='flex mt-2 gap-2 items-center justify-center'>
                   <span> Already have account? </span>
-                  <Button onClick={() => navigate("/signin")} variant="secondary">
+                  <Button onClick={() => navigate("/auth/signin")} variant="secondary">
                     Sign In
                   </Button>
                 </div>
-              </section>) : location.pathname== "/forgot-password" ? (
+              </section>) : type == "forgot-password" ? (
               <section className='w-[80%] lg:w-[35%]'>
                   <Forgotpassword />
                   <div className='flex mt-2 gap-2 items-center justify-center'>
                     <span> Sign In?</span>
-                    <Button onClick={() => navigate("/signin")} variant="secondary">
+                    <Button onClick={() => navigate("/auth/signin")} variant="secondary">
                       Sign In
                     </Button>
                   </div>
@@ -45,12 +46,12 @@ const Auth = () => {
                 <Signin />
                 <div className='flex mt-2 gap-2 items-center justify-center'>
                   <span> Don't have account? </span>
-                  <Button onClick={() => navigate("/signup")} variant="secondary">
+                  <Button onClick={() => navigate("/auth/signup")} variant="secondary">
                     Sign Up
                   </Button>
                 </div>
                 <div className='mt-4'>
-                  <Button className="w-full py-5" onClick={() => navigate("/forgot-password")} variant="outline">
+                  <Button className="w-full py-5" onClick={() => navigate("/auth/forgot-password")} variant="outline">
                     Forgot Password
                   </Button>
                 </div>
