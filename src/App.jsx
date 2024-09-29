@@ -59,7 +59,6 @@ function App() {
     return auth?.loading ?? false;
   }
 
-  console.log("auth1 ", auth);
   return (
     <>
     <div>
@@ -89,13 +88,16 @@ const PrivateComponent = ({children}) => {
   const { auth } = useSelector((store) => store);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!auth.loading && !auth.user) {
+      console.log("auth.loading ", auth);
+      navigate("/auth/signin");
+    }
+  }, [auth])
+
   if (auth.loading) {
     return <Loader />
   }
-  useEffect(() => {
-    if (!auth.loading && !auth.user)
-      navigate("/auth/signin");
-  }, [auth])
   return children
 }
 

@@ -15,10 +15,11 @@ import {
     InputOTPSlot,
   } from "@/components/ui/input-otp"
 import { Button } from '@/components/ui/button';
+import { useSelector } from 'react-redux';
   
 
 
-const Enable2StepVerif = ({ handleSubmit }) => {
+const Enable2StepVerif = ({ handleSubmit, email }) => {
     const [otp, setOTP] = useState("");
     const handleSubmit1 = () => {
         console.log("Submitted");
@@ -28,7 +29,7 @@ const Enable2StepVerif = ({ handleSubmit }) => {
             <div className='space-y-5 mt-10 w-full'>
                 <div className='flex justify-between items-center'>
                     <p>Email :</p>
-                    <p>codewithzosh@gmail.com</p>
+                    <p>{email ?? ""}</p>
                     <Dialog>
                         <DialogTrigger>
                             Sent OTP

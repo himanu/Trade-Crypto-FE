@@ -10,9 +10,12 @@ import {
   } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import Enable2StepVerif from "./Enable2StepVerif";
+import { useSelector } from "react-redux";
   
 
 const Profile = () => {
+    const auth = useSelector((store) => store.auth);
+    const {username, email} = auth?.user ?? {};
     const acitvate2StepVeri = () => {};
     return (
         <div className="flex flex-col items-center mb-5">
@@ -28,37 +31,37 @@ const Profile = () => {
                             <div className="space-y-7">
                                 <div className="flex">
                                     <p className="w-[9rem]"> Email : </p>
-                                    <p className="text-gray-500"> example@mail.com </p>
+                                    <p className="text-gray-500"> {email} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> FullName : </p>
-                                    <p className="text-gray-500">Example Yadav </p>
+                                    <p className="text-gray-500">{username} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> DOB : </p>
-                                    <p className="text-gray-500"> 18 March 1344 </p>
+                                    <p className="text-gray-500"> {"Not Available"} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> Nationality : </p>
-                                    <p className="text-gray-500"> XYZ </p>
+                                    <p className="text-gray-500"> {"Not Available"} </p>
                                 </div>
                             </div>
                             <div className="space-y-7 lg:mt-0 mt-7">
-                                <div className="flex">
+                            <div className="flex">
                                     <p className="w-[9rem]"> Email : </p>
-                                    <p className="text-gray-500"> example@mail.com </p>
+                                    <p className="text-gray-500"> {email} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> FullName : </p>
-                                    <p className="text-gray-500">Example Yadav </p>
+                                    <p className="text-gray-500">{username} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> DOB : </p>
-                                    <p className="text-gray-500"> 18 March 1344 </p>
+                                    <p className="text-gray-500"> {"Not Available"} </p>
                                 </div>
                                 <div className="flex">
                                     <p className="w-[9rem]"> Nationality : </p>
-                                    <p className="text-gray-500"> XYZ </p>
+                                    <p className="text-gray-500"> {"Not Available"} </p>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +95,7 @@ const Profile = () => {
                                         <DialogHeader>
                                             <DialogTitle>Verify your account</DialogTitle>
                                         </DialogHeader>
-                                        <Enable2StepVerif handleSubmit={acitvate2StepVeri} />
+                                        <Enable2StepVerif email={email} handleSubmit={acitvate2StepVeri} />
                                     </DialogContent>
                                 </Dialog>
 

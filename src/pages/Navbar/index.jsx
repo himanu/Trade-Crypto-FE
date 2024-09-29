@@ -12,7 +12,7 @@ import {
 import { logoutUser } from "@/store/Auth/action";
 import { ActivityLogIcon, BookmarkIcon, DashboardIcon, DragHandleHorizontalIcon, ExitIcon, HomeIcon, MagnifyingGlassIcon, PersonIcon } from "@radix-ui/react-icons";
 import { CreditCardIcon, LandmarkIcon, WalletIcon } from "lucide-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const sideBarMenu = [
@@ -30,6 +30,7 @@ const sideBarMenu = [
 const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const auth = useSelector((store) => store.auth);
     const handleClick = (path, name) => {
         if (name === 'Logout') {
             dispatch(logoutUser());
@@ -62,7 +63,7 @@ const Navbar = () => {
                             </SheetTitle>
                         </SheetHeader>
                         {sideBarMenu.map((item, idx) => (
-                            <SheetClose onClick={() => handleClick(item.path, item.name)}>
+                            <SheetClose key={item.path} onClick={() => handleClick(item.path, item.name)}>
                                 <Button
                                     variant="outline"
                                     className="w-full  flex item-center py-6 gap-4"
@@ -88,7 +89,7 @@ const Navbar = () => {
             </div>
             <Avatar>
                 <AvatarFallback>
-                    H
+                    {auth?.user?.username?.[0] ?? 'R'}
                 </AvatarFallback>
             </Avatar>
         </div>

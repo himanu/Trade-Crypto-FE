@@ -2,7 +2,7 @@ import { REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS, LOGIN, LOGIN_FAILURE, LOG
 
 const initialState = {
     user: null,
-    loading: false,
+    loading: true,
     error: null,
     jwt: null
 }

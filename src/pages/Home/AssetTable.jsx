@@ -25,8 +25,8 @@ const AssetTable = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {[...Array(5)].map(() => (
-                    <TableRow onClick={() => navigate("/market/bitcoin")}>
+                {[...Array(5)].map((item, idx) => (
+                    <TableRow key={idx} onClick={() => navigate("/market/bitcoin")}>
                         <TableCell className="font-medium flex items-center gap-3">
                             <Avatar>
                                 <AvatarImage src="https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"></AvatarImage>
