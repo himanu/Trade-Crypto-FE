@@ -54,7 +54,9 @@ export const getUser = (jwt) => async (dispatch) => {
         dispatch({type: GET_USER_SUCCESS, payload: user});
     } catch(error) {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
-        console.log("Error ", error.message);
+        console.log("Error ", error?.status);
+        if (error.status === 401) 
+            localStorage.removeItem(jwtTokenStr);
     }
 }
 

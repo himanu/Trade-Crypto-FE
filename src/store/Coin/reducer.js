@@ -41,7 +41,7 @@ const coinReducer = (state = initialState, action) => {
         case FETCH_MARKET_CHART_SUCCESS:
             return ({
                 ...state,
-                coinMarketData: action.payload,
+                coinMarketData: { data: action?.payload?.prices ?? [], loading: false},
                 loading: false,
                 error: null
             })

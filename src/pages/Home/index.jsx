@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AssetTable from "./AssetTable";
 import StockChart from "./StockChart";
 import { Avatar } from "@radix-ui/react-avatar";
@@ -7,6 +7,9 @@ import { AvatarImage } from "@/components/ui/avatar";
 import { DotIcon, MessageCircle } from "lucide-react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
+import { useDispatch, useSelector } from "react-redux";
+import { getCoinList } from "@/store/Coin/action";
+import { jwtTokenStr } from "@/constants";
 
 const filterCategories = [
     { text: "All", name: "all" },
@@ -18,12 +21,19 @@ const Home = () => {
     const [category, setCategory] = useState(filterCategories[0].name);
     const [inputValue, setInputValue] = useState("");
     const [isBotOpen, setIsBotOpen] = useState(false);
+    const {jwt = ""} = useSelector(store => store?.auth ?? {});
+    const coins = useSelector(store => store.coin.coins);
+    const dispatch = useDispatch();
     const handleChatInptKeyPress = (e) => {
         if (e.key == "Enter") {
             console.log("inputValue", inputValue);
             setInputValue("");
         }
     }
+
+    useEffect(() => {
+        coins.length === 0 && dispatch(getCoinList(1, jwt ?? localStorage.getItem(jwtTokenStr)));
+    }, []);
     return (
         <div>
             <div className="flex border-t">

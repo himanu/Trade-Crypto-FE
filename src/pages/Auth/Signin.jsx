@@ -4,11 +4,16 @@ import { useForm } from 'react-hook-form'
 import { DialogClose } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import  { login } from "../../store/Auth/action";
+import { useNavigate } from 'react-router-dom'
 
 
 const SignIn = () => {
+
+  const { auth } = useSelector((store) => store);
+  const navigate = useNavigate();
+
   const form = useForm({
     resolver: "",
     defaultValues: {
@@ -20,6 +25,11 @@ const SignIn = () => {
   const onSubmit = (data) => {
     dispatch(login(data));
   }
+  useEffect(() => {
+    if (!auth.loading && auth.user) {
+      navigate("/");
+    }
+  }, [auth.user])
   return (
     <div>
       <h1 className='text-xl font-bold text-center pb-4'> Sign In</h1>

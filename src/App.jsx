@@ -29,7 +29,6 @@ const endpoints = [
   {path: '/wallet', component: <Wallet />, isPublic: false},
   {path: '/withdrawal', component: <WithDrawal />, isPublic: false},
   {path: '/payment_details', component: <PaymentDetails />, isPublic: false},
-  {path: '/stock_details', component: <StockDetails />, isPublic: false},
   {path: '/watchlist', component: <WatchList />, isPublic: false},
   {path: '/market/:id', component: <StockDetails />, isPublic: false},
   {path: '/profile', component: <Profile />, isPublic: false},
@@ -38,10 +37,8 @@ const endpoints = [
 ]
 
 function App() {
-  const { auth } = useSelector((store) => store);
+  const { auth, coin } = useSelector((store) => store);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   useEffect(() => {
     const token = auth.jwt || localStorage.getItem(jwtTokenStr);
     if (!token)
@@ -49,14 +46,10 @@ function App() {
     dispatch(getUser(token));
   }, [auth.jwt]);
 
-  useEffect(() => {
-    if (!auth.loading && auth.user) {
-      navigate("/");
-    }
-  }, [auth.user])
+
 
   const hasLoader = () => {
-    return auth?.loading ?? false;
+    return (auth?.loading ?? false) || coin?.loading;
   }
 
   return (
