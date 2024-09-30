@@ -1,15 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import AssetTable from "./AssetTable";
-import StockChart from "./StockChart";
-import { Avatar } from "@radix-ui/react-avatar";
-import { AvatarImage } from "@/components/ui/avatar";
-import { DotIcon, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
-import { getCoinList } from "@/store/Coin/action";
+import { getCoinList, getTop50Coins } from "@/store/Coin/action";
 import { jwtTokenStr } from "@/constants";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+  } from "@/components/ui/pagination"
+  
 
 const filterCategories = [
     { text: "All", name: "all" },
@@ -22,7 +29,7 @@ const Home = () => {
     const [inputValue, setInputValue] = useState("");
     const [isBotOpen, setIsBotOpen] = useState(false);
     const {jwt = ""} = useSelector(store => store?.auth ?? {});
-    const coins = useSelector(store => store.coin.coins);
+    const {coins, top50Coins} = useSelector(store => store.coin);
     const dispatch = useDispatch();
     const handleChatInptKeyPress = (e) => {
         if (e.key == "Enter") {
@@ -32,12 +39,13 @@ const Home = () => {
     }
 
     useEffect(() => {
-        coins.length === 0 && dispatch(getCoinList(1, jwt ?? localStorage.getItem(jwtTokenStr)));
-    }, []);
+        category === "all" && coins.length === 0 && dispatch(getCoinList(1, jwt ?? localStorage.getItem(jwtTokenStr)));
+        category === "top50" && top50Coins.length === 0 && dispatch(getTop50Coins(jwt ?? localStorage.getItem(jwtTokenStr)));
+    }, [category]);
     return (
         <div>
             <div className="flex border-t">
-                <div className="max-w-[50%] flex-1 border-r">
+                <div className=" flex-1 border-r">
                     <div className="flex items-center gap-4 p-3">
                         {filterCategories.map((item, idx) => (
                             <div key={item.name}>
@@ -45,39 +53,23 @@ const Home = () => {
                             </div>
                         ))}
                     </div>
-                    <AssetTable />
-                </div>
-                <div className="max-w-[50%] px-4 flex-1">
-                    <StockChart />
-                    <div className="flex gap-5 ml-3 items-center">
-                        <div>
-                            <Avatar>
-                                <AvatarImage className="h-[50px]" src="https://assets.coingecko.com/coins/images/1/standard/bitcoin.png?1696501400"></AvatarImage>
-                            </Avatar>
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-2">
-                                <p>
-                                    BTC
-                                </p>
-                                <DotIcon className="text-gray-400" />
-                                <p className="text-gray-400"> Bitcoin </p>
-                            </div>
-                            <div className="flex items-end gap-2">
-                                <p className="text-lg font-bold">
-                                    5464
-                                </p>
-                                <p className="text-red-600">
-                                    <span>
-                                        -1219049822.578
-                                    </span>
-                                    <span>
-                                        (-0.29%)
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <AssetTable coins={category === "all" ? coins : top50Coins} />
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious href="#" />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationLink href="#">1</PaginationLink>
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+                            <PaginationItem>
+                                <PaginationNext href="#" />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 </div>
             </div>
             <section className="absolute bottom-5 right-5 z-40 flex flex-col justify-end items-end gap-2">

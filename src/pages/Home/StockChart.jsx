@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { jwtTokenStr } from "@/constants";
+import { getCoinMarketData } from "@/store/Coin/action";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { useDispatch, useSelector } from "react-redux";
 
 const timeSeries = [
     {
@@ -20,57 +23,22 @@ const timeSeries = [
         key: "Monthly Time Series",
         label: "1 Month",
         value: 30
+    },
+    {
+        keyword: "DIGITAL_CURRENCY_YEARLY",
+        key: "Yearly Time Series",
+        label: "1 Year",
+        value: 365
     }
 ]
 
-const StockChart = () => {
+const StockChart = ({coinId}) => {
     const [activeLabel, setActiveLabel] = useState(timeSeries[0].label);
-    const data = {
-        "prices": [
-          [
-            1711843200000,
-            69702.3087473573
-          ],
-          [
-            1711929600000,
-            71246.9514406015
-          ],
-          [
-            1711983682000,
-            68887.7495158568
-          ]
-        ],
-        "market_caps": [
-          [
-            1711843200000,
-            1370247487960.09
-          ],
-          [
-            1711929600000,
-            1401370211582.37
-          ],
-          [
-            1711983682000,
-            1355701979725.16
-          ]
-        ],
-        "total_volumes": [
-          [
-            1711843200000,
-            16408802301.8374
-          ],
-          [
-            1711929600000,
-            19723005998.215
-          ],
-          [
-            1711983682000,
-            30137418199.6431
-          ]
-        ]
-    }
+    const { coinMarketData } = useSelector(store => store.coin);
+    const dispatch = useDispatch();
+
     const searies = [{
-        data: data.prices
+        data: coinMarketData?.data ?? []
     }]
     const options = {
         chart: {
@@ -114,6 +82,20 @@ const StockChart = () => {
             show: true
         }
     }
+
+    const getDays = () => {
+      if (activeLabel === "1 Day") 
+        return 1;
+      else if (activeLabel === "1 Week")
+        return 7;
+      else if (activeLabel === "1 Month")
+        return 30;
+      else 
+        return 365;
+    }
+    useEffect(() => {
+      dispatch(getCoinMarketData(coinId, getDays(), localStorage.getItem(jwtTokenStr)));
+    }, [coinId, activeLabel]);
     return (
         <div>
             <div className="space-x-3 flex p-3">

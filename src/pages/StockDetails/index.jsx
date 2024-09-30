@@ -73,7 +73,7 @@ const StockDetails = () => {
                 </div>
             </div>
             <div className="mt-14">
-                <StockChart />
+                <StockChart coinId={id} />
             </div>
         </div>
     )

@@ -12,9 +12,8 @@ import {
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const AssetTable = () => {
+const AssetTable = ({coins}) => {
     const navigate = useNavigate();
-    const coins = useSelector(store => store.coin.coins);
     return (
         <Table>
             <ScrollArea className="h-[70vh]">
