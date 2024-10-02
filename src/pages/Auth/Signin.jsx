@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { DialogClose } from '@/components/ui/dialog'
@@ -25,8 +25,10 @@ const SignIn = () => {
   const onSubmit = (data) => {
     dispatch(login(data));
   }
+  console.log("auth ", auth);
   useEffect(() => {
     if (!auth.loading && auth.user) {
+      console.log("navigating to home")
       navigate("/");
     }
   }, [auth.user])

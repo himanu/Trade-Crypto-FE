@@ -14,6 +14,10 @@ import TopUpForm from "./TopUpForm";
 import WithdrawalForm from "./WithdrawalForm";
 import TransferForm from "./TransferForm";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getUserWallet, getWalletTxns } from "@/store/Wallet/action";
+import { useJWTToken } from "@/hooks/jwtToken";
 
 const dialogs = [
     { label: "Add Money", labelIcon: <UploadIcon />, dialogTitle: "Top Up Your Wallet", dialogContent: <TopUpForm /> },
@@ -21,6 +25,15 @@ const dialogs = [
     // {label: "Transfer Money", labelIcon: <ShuffleIcon />, dialogTitle: "Transfer to other wallet", dialogContent: <TransferForm />}
 ]
 const Wallet = () => {
+    const dispatch = useDispatch();
+    const jwtToken = useJWTToken();
+    const {wallet, txns} =  useSelector(store => store.wallet);
+
+    useEffect(() => {
+        dispatch(getUserWallet(jwtToken));
+        dispatch(getWalletTxns(jwtToken));
+    }, [])
+
     return (
         <div className="flex flex-col items-center">
             <div className="pt-10 w-full lg:w-[60%]">

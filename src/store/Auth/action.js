@@ -2,6 +2,7 @@ import axios from "axios"
 import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS } from "./actionTypes";
 import { jwtTokenStr } from "@/constants";
 import { toast } from "react-toastify";
+import { navigateToSignIn } from "@/lib/utils";
 
 const baseUrl = "http://localhost:8082";
 export const register = (userData) => async (dispatch) => {
@@ -54,9 +55,11 @@ export const getUser = (jwt) => async (dispatch) => {
         dispatch({type: GET_USER_SUCCESS, payload: user});
     } catch(error) {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
-        console.log("Error ", error?.status);
-        if (error.status === 401) 
+        if (error.status === 401) {
             localStorage.removeItem(jwtTokenStr);
+            navigateToSignIn();
+        }
+        console.log("Error ", error?.status);
     }
 }
 
@@ -66,4 +69,5 @@ export const logoutUser = () => async (dispatch) => {
         type: LOGOUT,
         payload: {}
     })
+    navigateToSignIn();
 }

@@ -5,7 +5,7 @@ const initialState = {
     coinMarketData: {data: [], loading: false},
     searchCoinResult: [],
     coinDetail: null,
-    loading: true,
+    loading: false,
     error: null
 }
 

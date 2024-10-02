@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './pages/Navbar'
 import Home from './pages/Home'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Portfolio from './pages/Portfolio'
 import Activity from './pages/Activity'
 import Wallet from './pages/Wallet'
@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/ui/loader'
 import { jwtTokenStr } from './constants'
+import { navigateToSignIn } from './lib/utils'
 
 const endpoints = [
   {path: '/auth/:type', component: <Auth />, isPublic: true},
@@ -41,8 +42,10 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const token = auth.jwt || localStorage.getItem(jwtTokenStr);
-    if (!token)
+    if (!token) {
+      navigateToSignIn();
       return;
+    }
     dispatch(getUser(token));
   }, [auth.jwt]);
 
@@ -79,14 +82,7 @@ function App() {
 
 const PrivateComponent = ({children}) => {
   const { auth } = useSelector((store) => store);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!auth.loading && !auth.user) {
-      console.log("auth.loading ", auth);
-      navigate("/auth/signin");
-    }
-  }, [auth])
 
   if (auth.loading) {
     return <Loader />

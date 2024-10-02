@@ -3,7 +3,7 @@ import { REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS, LOGIN, LOGIN_FAILURE, LOG
 
 const initialState = {
     user: null,
-    loading: true,
+    loading: false,
     error: null,
     jwt: null
 }
@@ -45,7 +45,8 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                user: null
+                user: null,
+                jwt: null
             })
         case REGISTER_SUCCESS:
             return ({
