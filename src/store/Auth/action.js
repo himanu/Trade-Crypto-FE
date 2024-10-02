@@ -12,13 +12,11 @@ export const register = (userData) => async (dispatch) => {
     try {
         const response = await axios.post(`${baseUrl}/signup`, userData);
         const user = response.data;
-        console.log(user);
         dispatch({type: REGISTER_SUCCESS, payload: user});
         toast.success("Signed Up Successfully!");
     } catch(error) {
         dispatch({type: REGISTER_FAILURE, payload: error.message});
         toast.error(error?.response?.data ?? error?.message ?? "Something Went Wrong!");
-        console.log("Error ", error);
     }
 }
 
@@ -31,12 +29,10 @@ export const login = (userData) => async (dispatch) => {
     try {
         const response = await axios.post(`${baseUrl}/login`, userData);
         const user = response.data;
-        console.log(user);
         dispatch({type: LOGIN_SUCCESS, payload: user});
         localStorage.setItem("token", user?.token)
     } catch(error) {
         dispatch({type: LOGIN_FAILURE, payload: error.message});
-        console.log("Error ", error);
     }
 }
 
@@ -51,7 +47,6 @@ export const getUser = (jwt) => async (dispatch) => {
             }
         });
         const user = response.data;
-        console.log(user);
         dispatch({type: GET_USER_SUCCESS, payload: user});
     } catch(error) {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
@@ -59,7 +54,6 @@ export const getUser = (jwt) => async (dispatch) => {
             localStorage.removeItem(jwtTokenStr);
             navigateToSignIn();
         }
-        console.log("Error ", error?.status);
     }
 }
 

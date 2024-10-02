@@ -17,7 +17,6 @@ const Signup = () => {
     }
   })
   const onSubmit = (data) => {
-    console.log("data ", data);
     dispatch(register(data));
   }
   return (

@@ -21,7 +21,6 @@ const StockDetails = () => {
     const dispatch = useDispatch();
     const { jwt  = ""} = useSelector((store) => store.auth);
     const coinDetail = useSelector(store => store.coin.coinDetail);
-    console.log("coinDetail ", coinDetail);
     useEffect(() => {
         jwt && dispatch(getCoinDetails(id, jwt));
     }, [id, jwt]);

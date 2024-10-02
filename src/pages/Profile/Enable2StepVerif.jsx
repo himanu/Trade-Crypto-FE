@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux';
 const Enable2StepVerif = ({ handleSubmit, email }) => {
     const [otp, setOTP] = useState("");
     const handleSubmit1 = () => {
-        console.log("Submitted");
+
     }
     return (
         <div className='flex justify-center'>

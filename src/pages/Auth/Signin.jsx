@@ -25,10 +25,9 @@ const SignIn = () => {
   const onSubmit = (data) => {
     dispatch(login(data));
   }
-  console.log("auth ", auth);
+
   useEffect(() => {
     if (!auth.loading && auth.user) {
-      console.log("navigating to home")
       navigate("/");
     }
   }, [auth.user])

@@ -33,7 +33,6 @@ const Home = () => {
     const dispatch = useDispatch();
     const handleChatInptKeyPress = (e) => {
         if (e.key == "Enter") {
-            console.log("inputValue", inputValue);
             setInputValue("");
         }
     }

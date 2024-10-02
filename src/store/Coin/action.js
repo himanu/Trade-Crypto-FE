@@ -15,11 +15,9 @@ export const getCoinList = (page, jwt) => async (dispatch) => {
             }
         });
         const coins = response.data;
-        console.log(coins);
         dispatch({type: FETCH_COIN_LIST_SUCCESS, payload: coins});
     } catch(error) {
         dispatch({type: FETCH_COIN_LIST_FAILURE, payload: error.message});
-        console.log("Error ", error);
     }
 }
 
@@ -34,11 +32,9 @@ export const getCoinMarketData = (coin, days, jwt) => async (dispatch) => {
             }
         });
         const marketData = response.data;
-        console.log(marketData);
         dispatch({type: FETCH_MARKET_CHART_SUCCESS, payload: marketData});
     } catch(error) {
         dispatch({type: FETCH_MARKET_CHART_FAILURE, payload: error.message});
-        console.log("Error ", error);
     }
 }
 
@@ -53,11 +49,9 @@ export const getTop50Coins = (jwt) => async (dispatch) => {
             }
         });
         const coins = response.data;
-        console.log(coins);
         dispatch({type: FETCH_TOP_50_COINS_SUCCESS, payload: coins});
     } catch(error) {
         dispatch({type: FETCH_TOP_50_COINS_FAILURE, payload: error.message});
-        console.log("Error ", error);
     }
 }
 
@@ -72,11 +66,9 @@ export const getCoinDetails = (coin, jwt) => async (dispatch) => {
             }
         });
         const coinData = response.data;
-        console.log(coinData);
         dispatch({type: FETCH_COIN_DETAILS_SUCCESS, payload: coinData});
     } catch(error) {
         dispatch({type: FETCH_COIN_DETAILS_FAILURE, payload: error.message});
-        console.log("Error ", error);
     }
 }
 

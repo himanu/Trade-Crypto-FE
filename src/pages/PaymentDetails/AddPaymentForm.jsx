@@ -16,7 +16,6 @@ const AddPaymentForm = () => {
     }
   })
   const onSubmit = (data) => {
-    console.log("data ", data);
   }
   return (
     <div className='px-10 py-2'>
