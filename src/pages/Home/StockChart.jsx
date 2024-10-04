@@ -4,6 +4,7 @@ import { getCoinMarketData } from "@/store/Coin/action";
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const timeSeries = [
     {
@@ -36,6 +37,7 @@ const StockChart = ({coinId}) => {
     const [activeLabel, setActiveLabel] = useState(timeSeries[0].label);
     const { coinMarketData } = useSelector(store => store.coin);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const searies = [{
         data: coinMarketData?.data ?? []
@@ -94,7 +96,7 @@ const StockChart = ({coinId}) => {
         return 365;
     }
     useEffect(() => {
-      dispatch(getCoinMarketData(coinId, getDays(), localStorage.getItem(jwtTokenStr)));
+      dispatch(getCoinMarketData(coinId, getDays(), localStorage.getItem(jwtTokenStr), navigate));
     }, [coinId, activeLabel]);
     return (
         <div>

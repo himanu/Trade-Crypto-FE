@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './pages/Navbar'
 import Home from './pages/Home'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Portfolio from './pages/Portfolio'
 import Activity from './pages/Activity'
 import Wallet from './pages/Wallet'
@@ -20,7 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/ui/loader'
 import { jwtTokenStr } from './constants'
-import { navigateToSignIn } from './lib/utils'
+import Payment from './Payment'
 
 const endpoints = [
   {path: '/auth/:type', component: <Auth />, isPublic: true},
@@ -40,14 +40,15 @@ const endpoints = [
 function App() {
   const { auth, coin } = useSelector((store) => store);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
-    const token = auth.jwt || localStorage.getItem(jwtTokenStr);
+    const token =localStorage.getItem(jwtTokenStr);
     if (!token) {
-      navigateToSignIn();
+      navigate("/auth/signin");
       return;
     }
-    dispatch(getUser(token));
-  }, [auth.jwt]);
+    dispatch(getUser(token, navigate));
+  }, []);
 
 
 
@@ -58,7 +59,6 @@ function App() {
   return (
     <>
     <div>
-      <Navbar />
       <Routes>
         {endpoints.map((item, idx) => {
           if (item.isPublic) {
@@ -71,7 +71,9 @@ function App() {
         })}
       </Routes>
       <ToastContainer />
+      
       {hasLoader() && <Loader />}
+      {/* <Payment /> */}
     </div>
     <a href="https://www.linkedin.com/in/himanshu-yadav-7554161b2/" target='_blank' className="z-[100] made-with-love hover:text-white">
       Made with ❤️ by Himanshu
@@ -84,10 +86,13 @@ const PrivateComponent = ({children}) => {
   const { auth } = useSelector((store) => store);
 
 
-  if (auth.loading) {
-    return <Loader />
-  }
-  return children
+  // if (auth.loading) {
+  //   return <Loader />
+  // }
+  return <>
+  <Navbar />
+  {children}
+  </>
 }
 
 export default App

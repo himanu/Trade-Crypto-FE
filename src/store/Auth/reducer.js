@@ -60,7 +60,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 error: null,
-                user: null,
+                user: action?.payload?.user,
                 jwt: action?.payload?.token ?? ""
             })
         case GET_USER_SUCCESS:

@@ -1,10 +1,10 @@
 import axios from "axios"
 import { GET_USER, GET_USER_FAILURE, GET_USER_SUCCESS, LOGIN, LOGIN_FAILURE, LOGIN_SUCCESS, LOGOUT, REGISTER, REGISTER_FAILURE, REGISTER_SUCCESS } from "./actionTypes";
-import { jwtTokenStr } from "@/constants";
+import { baseUrl, jwtTokenStr } from "@/constants";
 import { toast } from "react-toastify";
-import { navigateToSignIn } from "@/lib/utils";
+import { logout } from "@/lib/utils";
 
-const baseUrl = "http://localhost:8082";
+
 export const register = (userData) => async (dispatch) => {
     dispatch({
         type: REGISTER
@@ -36,7 +36,7 @@ export const login = (userData) => async (dispatch) => {
     }
 }
 
-export const getUser = (jwt) => async (dispatch) => {
+export const getUser = (jwt, navigate) => async (dispatch) => {
     dispatch({
         type: GET_USER
     })
@@ -50,18 +50,17 @@ export const getUser = (jwt) => async (dispatch) => {
         dispatch({type: GET_USER_SUCCESS, payload: user});
     } catch(error) {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
+        
         if (error.status === 401) {
-            localStorage.removeItem(jwtTokenStr);
-            navigateToSignIn();
+            logout(navigate);
         }
     }
 }
 
-export const logoutUser = () => async (dispatch) => {
-    localStorage.removeItem(jwtTokenStr);
+export const logoutUser = (navigate) => async (dispatch) => {
     dispatch({
         type: LOGOUT,
         payload: {}
     })
-    navigateToSignIn();
+    logout(navigate);
 }

@@ -11,8 +11,6 @@ import { useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
 
-  const { auth } = useSelector((store) => store);
-  const navigate = useNavigate();
 
   const form = useForm({
     resolver: "",
@@ -26,11 +24,6 @@ const SignIn = () => {
     dispatch(login(data));
   }
 
-  useEffect(() => {
-    if (!auth.loading && auth.user) {
-      navigate("/");
-    }
-  }, [auth.user])
   return (
     <div>
       <h1 className='text-xl font-bold text-center pb-4'> Sign In</h1>

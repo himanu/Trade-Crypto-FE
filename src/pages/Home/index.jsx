@@ -16,6 +16,7 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination"
+import { useNavigate } from "react-router-dom";
   
 
 const filterCategories = [
@@ -28,9 +29,9 @@ const Home = () => {
     const [category, setCategory] = useState(filterCategories[0].name);
     const [inputValue, setInputValue] = useState("");
     const [isBotOpen, setIsBotOpen] = useState(false);
-    const {jwt = ""} = useSelector(store => store?.auth ?? {});
     const {coins, top50Coins} = useSelector(store => store.coin);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handleChatInptKeyPress = (e) => {
         if (e.key == "Enter") {
             setInputValue("");
@@ -38,8 +39,8 @@ const Home = () => {
     }
 
     useEffect(() => {
-        category === "all" && coins.length === 0 && dispatch(getCoinList(1, jwt ?? localStorage.getItem(jwtTokenStr)));
-        category === "top50" && top50Coins.length === 0 && dispatch(getTop50Coins(jwt ?? localStorage.getItem(jwtTokenStr)));
+        category === "all" && coins.length === 0 && dispatch(getCoinList(1, localStorage.getItem(jwtTokenStr), navigate));
+        category === "top50" && top50Coins.length === 0 && dispatch(getTop50Coins(localStorage.getItem(jwtTokenStr), navigate));
     }, [category]);
     return (
         <div>

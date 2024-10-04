@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Auth.css";
 import Signup from './Signup';
 import Signin from './Signin';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import Forgotpassword from './Forgotpassword';
+import { useSelector } from 'react-redux';
 
 const Auth = () => {
   const navigate = useNavigate();
   const { type } = useParams();
+  const { auth } = useSelector((store) => store);
+
+  useEffect(() => {
+    if (!auth.loading && auth.user) {
+      navigate("/");
+    }
+  }, [auth.user])
   return (
     <div className='absolute top-0 left-0 w-[100vw] h-screen authContainer'>
       <div className='absolute top-0 right-0 left-0 bottom-0 bg-[#030712]

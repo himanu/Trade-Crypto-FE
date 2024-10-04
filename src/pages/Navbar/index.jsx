@@ -33,7 +33,7 @@ const Navbar = () => {
     const auth = useSelector((store) => store.auth);
     const handleClick = (path, name) => {
         if (name === 'Logout') {
-            dispatch(logoutUser());
+            dispatch(logoutUser(navigate));
             return;
         }
         navigate(path);

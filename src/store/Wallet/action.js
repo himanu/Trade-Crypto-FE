@@ -1,8 +1,9 @@
 import axios from "axios"
 import { GET_USER_WALLET, GET_USER_WALLET_FAILURE, GET_USER_WALLET_SUCCESS, GET_WALLET_TXNS, GET_WALLET_TXNS_FAILURE, GET_WALLET_TXNS_SUCCESS } from "./actionTypes"
 import { baseUrl } from "@/constants"
+import { logout } from "@/lib/utils"
 
-export const getUserWallet = (jwt) => async (dispatch) => {
+export const getUserWallet = (jwt, navigate) => async (dispatch) => {
     dispatch({
         type: GET_USER_WALLET
     })
@@ -22,10 +23,12 @@ export const getUserWallet = (jwt) => async (dispatch) => {
             type: GET_USER_WALLET_FAILURE,
             payload: err.message
         })
+        if (error?.status === 401)
+            logout(navigate, dispatch);
     }
 }
 
-export const getWalletTxns = (jwt) => async (dispatch) => {
+export const getWalletTxns = (jwt, navigate) => async (dispatch) => {
     dispatch({
         type: GET_WALLET_TXNS
     })
@@ -45,9 +48,11 @@ export const getWalletTxns = (jwt) => async (dispatch) => {
             type: GET_WALLET_TXNS_FAILURE,
             payload: err.message
         })
+        if (error?.status === 401)
+            logout(navigate, dispatch);
     }
 }
 
-export const depositMoney = (jwt) => async (dispatch) => {
+export const depositMoney = (jwt, navigate) => async (dispatch) => {
     
 }

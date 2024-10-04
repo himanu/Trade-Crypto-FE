@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUserWallet, getWalletTxns } from "@/store/Wallet/action";
 import { useJWTToken } from "@/hooks/jwtToken";
+import { useNavigate } from "react-router-dom";
 
 const dialogs = [
     { label: "Add Money", labelIcon: <UploadIcon />, dialogTitle: "Top Up Your Wallet", dialogContent: <TopUpForm /> },
@@ -28,10 +29,11 @@ const Wallet = () => {
     const dispatch = useDispatch();
     const jwtToken = useJWTToken();
     const {wallet, txns} =  useSelector(store => store.wallet);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        dispatch(getUserWallet(jwtToken));
-        dispatch(getWalletTxns(jwtToken));
+        dispatch(getUserWallet(jwtToken, navigate));
+        dispatch(getWalletTxns(jwtToken, navigate));
     }, [])
 
     return (

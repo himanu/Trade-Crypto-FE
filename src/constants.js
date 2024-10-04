@@ -1,2 +1,2 @@
 export const jwtTokenStr = "token";
-export const baseUrl = "http://localhost:8082";
+export const baseUrl = import.meta.env.VITE_API_URL;

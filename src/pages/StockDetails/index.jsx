@@ -12,18 +12,20 @@ import {
 import TrendingForm from "./TrendingForm";
 import StockChart from "../Home/StockChart";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinDetails } from "@/store/Coin/action";
+import { useJWTToken } from "@/hooks/jwtToken";
   
 const StockDetails = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
-    const { jwt  = ""} = useSelector((store) => store.auth);
+    const navigate = useNavigate();
     const coinDetail = useSelector(store => store.coin.coinDetail);
+    const jwt =  useJWTToken();
     useEffect(() => {
-        jwt && dispatch(getCoinDetails(id, jwt));
-    }, [id, jwt]);
+        dispatch(getCoinDetails(id, jwt, navigate));
+    }, [id]);
     return (
         <div className="p-5 mt-5">
             <div className="flex justify-between">
