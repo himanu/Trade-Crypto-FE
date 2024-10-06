@@ -52,7 +52,7 @@ export const getUser = (jwt, navigate) => async (dispatch) => {
         dispatch({type: GET_USER_FAILURE, payload: error.message});
         
         if (error.status === 401) {
-            logout(navigate);
+            logout(navigate, dispatch);
         }
     }
 }
@@ -62,5 +62,5 @@ export const logoutUser = (navigate) => async (dispatch) => {
         type: LOGOUT,
         payload: {}
     })
-    logout(navigate);
+    logout(navigate, dispatch);
 }

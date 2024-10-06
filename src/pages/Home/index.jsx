@@ -30,6 +30,7 @@ const Home = () => {
     const [inputValue, setInputValue] = useState("");
     const [isBotOpen, setIsBotOpen] = useState(false);
     const {coins, top50Coins} = useSelector(store => store.coin);
+    const [page, setPage] = useState(1);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handleChatInptKeyPress = (e) => {
@@ -39,9 +40,9 @@ const Home = () => {
     }
 
     useEffect(() => {
-        category === "all" && coins.length === 0 && dispatch(getCoinList(1, localStorage.getItem(jwtTokenStr), navigate));
+        category === "all" && dispatch(getCoinList(page, localStorage.getItem(jwtTokenStr), navigate));
         category === "top50" && top50Coins.length === 0 && dispatch(getTop50Coins(localStorage.getItem(jwtTokenStr), navigate));
-    }, [category]);
+    }, [category, page]);
     return (
         <div>
             <div className="flex border-t">
@@ -54,22 +55,29 @@ const Home = () => {
                         ))}
                     </div>
                     <AssetTable coins={category === "all" ? coins : top50Coins} />
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious href="#" />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationLink href="#">1</PaginationLink>
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-                            <PaginationItem>
-                                <PaginationNext href="#" />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
+                    {category === "all" && 
+                        <Pagination className="mt-4">
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious className={page === 1 && "cursor-not-allowed"} onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}/>
+                                </PaginationItem>
+                                <PaginationItem className="ml-2">
+                                    <PaginationLink onClick={() => setPage(1)} isActive={page === 1}>1</PaginationLink>
+                                </PaginationItem>
+                                <PaginationItem>
+                                    <PaginationEllipsis />
+                                </PaginationItem>
+                                {page != 1 &&
+                                    <PaginationItem className="mr-2">
+                                        <PaginationLink isActive={true}>{page}</PaginationLink>
+                                    </PaginationItem>
+                                }
+                                <PaginationItem className="cursor-pointer" onClick={() => setPage(page + 1)}>
+                                    <PaginationNext />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    }
                 </div>
             </div>
             <section className="absolute bottom-5 right-5 z-40 flex flex-col justify-end items-end gap-2">

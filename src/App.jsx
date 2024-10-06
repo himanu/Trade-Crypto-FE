@@ -38,7 +38,7 @@ const endpoints = [
 ]
 
 function App() {
-  const { auth, coin } = useSelector((store) => store);
+  const { auth, coin, wallet } = useSelector((store) => store);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,7 +53,7 @@ function App() {
 
 
   const hasLoader = () => {
-    return (auth?.loading ?? false) || coin?.loading;
+    return (auth?.loading ?? false) || coin?.loading || wallet?.loading;
   }
 
   return (
@@ -63,10 +63,10 @@ function App() {
         {endpoints.map((item, idx) => {
           if (item.isPublic) {
             return (
-              <Route path={item.path} key={item.path} element={item.component} />
+              <Route path={item.path} key={idx} element={item.component} />
             )
           } else {
-            return <Route path={item.path} key={item.path} element={<PrivateComponent> {item.component} </PrivateComponent>} />
+            return <Route path={item.path} key={idx} element={<PrivateComponent> {item.component} </PrivateComponent>} />
           }
         })}
       </Routes>

@@ -1,4 +1,4 @@
-import { DEPOSIT_MONEY, DEPOSIT_MONEY_FAILURE, DEPOSIT_MONEY_SUCCESS, GET_USER_WALLET, GET_USER_WALLET_FAILURE, GET_USER_WALLET_SUCCESS, GET_WALLET_TXNS, GET_WALLET_TXNS_FAILURE, GET_WALLET_TXNS_SUCCESS } from "./actionTypes"
+import { DEPOSIT_MONEY, DEPOSIT_MONEY_FAILURE, DEPOSIT_MONEY_SUCCESS, GET_USER_WALLET, GET_USER_WALLET_FAILURE, GET_USER_WALLET_SUCCESS, GET_WALLET_TXNS, GET_WALLET_TXNS_FAILURE, GET_WALLET_TXNS_SUCCESS, WITHDRAW_MONEY, WITHDRAW_MONEY_FAILURE, WITHDRAW_MONEY_SUCCESS } from "./actionTypes"
 
 const initialState = {
     loading: false,
@@ -11,6 +11,7 @@ export const walletReducer = (state = initialState, action) => {
         case GET_USER_WALLET: 
         case GET_WALLET_TXNS:
         case DEPOSIT_MONEY:
+        case WITHDRAW_MONEY:
             return {
                 ...state,
                 loading: true,
@@ -43,12 +44,17 @@ export const walletReducer = (state = initialState, action) => {
                 error: action?.payload
             }
         case DEPOSIT_MONEY_SUCCESS: 
+        case WITHDRAW_MONEY_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
-                wallet: action?.payload ?? {}
+                wallet: {
+                    ...state?.wallet,
+                    balance: action?.payload
+                }
             }
+        case WITHDRAW_MONEY_FAILURE:
         case DEPOSIT_MONEY_FAILURE:
             return {
                 ...state,

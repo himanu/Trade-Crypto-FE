@@ -99,7 +99,7 @@ export const searchCoins = (query, jwt, navigate) => async (disaptch) => {
             type: SEARCH_COIN_FAILURE,
             payload: err.message
         })
-        if (error?.status === 401)
+        if (err?.status === 401)
             logout(navigate, disaptch);
     }
 }
