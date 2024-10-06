@@ -59,7 +59,7 @@ const Home = () => {
                         <Pagination className="mt-4">
                             <PaginationContent>
                                 <PaginationItem>
-                                    <PaginationPrevious className={page === 1 && "cursor-not-allowed"} onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}/>
+                                    <PaginationPrevious className={page === 1 ? "cursor-not-allowed" : "cursor-pointer"} onClick={() => setPage(Math.max(1, page - 1))} disabled={page === 1}/>
                                 </PaginationItem>
                                 <PaginationItem className="ml-2">
                                     <PaginationLink onClick={() => setPage(1)} isActive={page === 1}>1</PaginationLink>
