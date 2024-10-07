@@ -15,7 +15,7 @@ import WithdrawalForm from "./WithdrawalForm";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getUserWallet, getWalletTxns } from "@/store/Wallet/action";
+import { getUserWallet, getWalletTxns, markDepositTxnSuccessful } from "@/store/Wallet/action";
 import { useJWTToken } from "@/hooks/jwtToken";
 import { useNavigate } from "react-router-dom";
 import Loader from "@/components/ui/loader";

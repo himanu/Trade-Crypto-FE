@@ -16,16 +16,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoinDetails } from "@/store/Coin/action";
 import { useJWTToken } from "@/hooks/jwtToken";
+import { getUserWallet } from "@/store/Wallet/action";
   
 const StockDetails = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const coinDetail = useSelector(store => store.coin.coinDetail);
+
+    const {wallet} =  useSelector(store => store.wallet);
     const jwt =  useJWTToken();
     useEffect(() => {
         dispatch(getCoinDetails(id, jwt, navigate));
     }, [id]);
+
+    const fetchWallet = () => dispatch(getUserWallet(jwt, navigate));
+
+    useEffect(() => {
+        Object.keys(wallet).length === 0 && fetchWallet();
+    }, [])
     return (
         <div className="p-5 mt-5">
             <div className="flex justify-between">
@@ -44,8 +53,8 @@ const StockDetails = () => {
                         <div className="flex items-end gap-2">
                             <p className="text-xl font-bold"> ${coinDetail?.market_data?.current_price?.usd}</p>
                             <p>
-                                <span className="text-red-600">
-                                    <span> {coinDetail?.market_data?.price_change_24h.toFixed(2)}</span>
+                                <span className={coinDetail?.market_data?.price_change_24h < 0 ? "text-red-600" : "text-green-600"}>
+                                    <span> {(coinDetail?.market_data?.price_change_24h >= 0 ? "+" : "") + coinDetail?.market_data?.price_change_24h.toFixed(2)} </span>
                                     <span> ({coinDetail?.market_data?.price_change_percentage_24h.toFixed(2)}%)</span>
                                 </span>
                             </p>
@@ -62,13 +71,9 @@ const StockDetails = () => {
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>How much do you want to spend?</DialogTitle>
-                                <DialogDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
-                                </DialogDescription>
+                                <DialogTitle>Trade {coinDetail?.name}</DialogTitle>
                             </DialogHeader>
-                            <TrendingForm />
+                            <TrendingForm coinDetail={coinDetail} wallet={wallet} />
                         </DialogContent>
                     </Dialog>
                 </div>
