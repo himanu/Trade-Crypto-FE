@@ -1,12 +1,43 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { DialogClose } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { baseUrl } from '@/constants'
+import { loaderContext } from '@/context'
+import { useJWTToken } from '@/hooks/jwtToken'
+import { logout } from '@/lib/utils'
 import { DotIcon } from '@radix-ui/react-icons'
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const TrendingForm = ({ coinDetail, wallet }) => {
     const [amount, setAmount] = useState("");
+    const {setLoading, loading} = useContext(loaderContext);
+    const jwt = useJWTToken();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleBuyOrder = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post(`${baseUrl}/order/buy?coinId=${coinDetail.id}&amount=${amount}`, null, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            });
+            toast.success("Order Successfully executed!")
+            setLoading(false);
+        } catch(error) {
+            setLoading(false);
+            toast.error("Order failed!")
+            if (error?.status === 401)
+                logout(navigate, dispatch);
+        } 
+    }
     return (
         <div className='space-y-10 p-5'>
 
@@ -75,9 +106,11 @@ const TrendingForm = ({ coinDetail, wallet }) => {
                 </div>
             </div>
             <div>
-                <Button disabled={amount > (wallet?.balance ?? 0) || !amount} onClick={() => console.log("Clicked")} className={`markDepositTxnSuccessfulw-full w-[100%] py-6`}>
-                    BUY
-                </Button>
+                <DialogClose className='w-full'>
+                    <Button disabled={amount > (wallet?.balance ?? 0) || !amount} onClick={handleBuyOrder} className={`markDepositTxnSuccessfulw-full w-[100%] py-6`}>
+                        BUY
+                    </Button>
+                </DialogClose>
                 {amount > (wallet?.balance ?? 0) && (
                     <h1 className='absolute w-[100%] left-0 pb-4 text-red-600 text-center pt-2'>
                         Insufficient Balance!

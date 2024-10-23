@@ -5,13 +5,16 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './store/index.js'
+import { LoaderContext } from './context.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-    </BrowserRouter>
+    <LoaderContext>
+      <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+      </BrowserRouter>
+    </LoaderContext>
   </StrictMode>,
 )

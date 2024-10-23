@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './pages/Navbar'
 import Home from './pages/Home'
@@ -21,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from './components/ui/loader'
 import { jwtTokenStr } from './constants'
 import Payment from './Payment'
+import { loaderContext } from './context'
 
 const endpoints = [
   {path: '/auth/:type', component: <Auth />, isPublic: true},
@@ -39,6 +40,7 @@ const endpoints = [
 
 function App() {
   const { auth, coin, wallet } = useSelector((store) => store);
+  const {loading} = useContext(loaderContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -53,7 +55,7 @@ function App() {
 
 
   const hasLoader = () => {
-    return (auth?.loading ?? false) || coin?.loading || wallet?.loading;
+    return (auth?.loading ?? false) || coin?.loading || wallet?.loading || loading;
   }
 
   return (
