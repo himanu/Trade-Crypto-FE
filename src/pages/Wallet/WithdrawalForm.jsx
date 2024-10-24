@@ -16,8 +16,8 @@ const WithdrawalForm = ({balance}) => {
     dispatch(withdrawMoney(amount, jwt, navigate));
   }
   return (
-    <div className='pt-10 space-y-5'>
-      <div className='flex justify-between items-center rounded-md bg-slate-900 text-2xl font-bold px-5 py-4'>
+    <div className='pt-5 space-y-5'>
+      <div className='flex justify-between items-center rounded-md bg-slate-900 font-bold px-5 py-2'>
         <p> Available Balance </p>
         <p> ${balance} </p>
       </div>
@@ -27,7 +27,7 @@ const WithdrawalForm = ({balance}) => {
           <Input 
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="withdrawalInput py-7 mt-4 border-none outline-none focus:outline-none px-0 text-2xl text-center"
+            className="withdrawalInput py-5 mt-4 border-none outline-none focus:outline-none px-0 text-lg text-center"
             placeholder="$0"
             type="number"
           />

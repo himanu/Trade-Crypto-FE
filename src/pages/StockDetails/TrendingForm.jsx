@@ -7,6 +7,7 @@ import { baseUrl } from '@/constants'
 import { loaderContext } from '@/context'
 import { useJWTToken } from '@/hooks/jwtToken'
 import { logout } from '@/lib/utils'
+import { WITHDRAW_MONEY_SUCCESS } from '@/store/Wallet/actionTypes'
 import { DotIcon } from '@radix-ui/react-icons'
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
@@ -29,6 +30,10 @@ const TrendingForm = ({ coinDetail, wallet }) => {
                     Authorization: `Bearer ${jwt}`
                 }
             });
+            dispatch({
+                type: WITHDRAW_MONEY_SUCCESS,
+                payload: wallet.balance - amount
+            })
             toast.success("Order Successfully executed!")
             setLoading(false);
         } catch(error) {

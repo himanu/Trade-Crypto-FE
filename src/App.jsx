@@ -77,9 +77,10 @@ function App() {
       {hasLoader() && <Loader />}
       {/* <Payment /> */}
     </div>
-    <a href="https://www.linkedin.com/in/himanshu-yadav-7554161b2/" target='_blank' className="z-[100] made-with-love hover:text-white">
+    {/* <a href="https://www.linkedin.com/in/himanshu-yadav-7554161b2/" target='_blank' className="z-[100] made-with-love hover:text-white">
       Made with ❤️ by Himanshu
-    </a>
+    </a> */}
+    {/* NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add tooltip */}
     </>
   )
 }

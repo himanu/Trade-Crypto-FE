@@ -23,6 +23,7 @@ import { baseUrl } from "@/constants";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { loadScript, logout } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const walletTxns = {
     add_funds: "Add Funds",
@@ -135,7 +136,7 @@ const Wallet = () => {
                     <CardContent>
                         <div className="flex items-center">
                             <DollarSign />
-                            <span className="text-2xl font-semibold"> {wallet?.balance}</span>
+                            <span className="text-2xl font-semibold"> {wallet?.balance ?? 0}</span>
                         </div>
                         <div className="flex gap-7 mt-5">
                             {dialogs.map((item) => {
@@ -193,6 +194,14 @@ const Wallet = () => {
                                 </Card>
                             </div>
                         ))}
+                        {txns.length === 0 && (
+                            <Button
+                            variant="outline"
+                            className="w-full flex item-center py-6 gap-4 cursor-default"
+                        >
+                            No Transactions!
+                        </Button>
+                        )}
                     </div>
                 </div>
             </div>
