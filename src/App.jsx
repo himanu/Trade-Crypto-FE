@@ -39,7 +39,7 @@ const endpoints = [
 ]
 
 function App() {
-  const { auth, coin, wallet } = useSelector((store) => store);
+  const { auth, coin, wallet, portfolio } = useSelector((store) => store);
   const {loading} = useContext(loaderContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ function App() {
 
 
   const hasLoader = () => {
-    return (auth?.loading ?? false) || coin?.loading || wallet?.loading || loading;
+    return (auth?.loading ?? false) || coin?.loading || wallet?.loading || loading || portfolio?.loading;
   }
 
   return (
