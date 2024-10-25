@@ -2,7 +2,7 @@ import axios from "axios";
 import { FETCH_PORTFOLIO, FETCH_PORTFOLIO_FAILURE, FETCH_PORTFOLIO_SUCCESS } from "./actionTypes"
 import { baseUrl } from "@/constants";
 
-export const fetchPortfolio = (jwt) => async (dispatch) => {
+export const fetchPortfolio = (jwt, navigate) => async (dispatch) => {
     try {
         dispatch({
             type: FETCH_PORTFOLIO
@@ -22,5 +22,7 @@ export const fetchPortfolio = (jwt) => async (dispatch) => {
             type: FETCH_PORTFOLIO_FAILURE,
             payload: err?.message ?? ""
         })
+        if (err?.status === 401)
+            logout(navigate, dispatch);
     }
 }

@@ -119,13 +119,7 @@ const Wallet = () => {
                             <div className="flex items-center gap-5">
                                 <WalletIcon size={30} />
                                 <div>
-                                    <CardTitle className="text-2xl">My Wallet</CardTitle>
-                                    <div className="flex items-center gap-2">
-                                        <p className="text-gray-200 text-sm">
-                                            #A475Ed
-                                        </p>
-                                        <CopyIcon size={12} className="cursor-pointer hover:text-slate-300" />
-                                    </div>
+                                    <CardTitle className="text-2xl">Wallet</CardTitle>
                                 </div>
                             </div>
                             <div>
