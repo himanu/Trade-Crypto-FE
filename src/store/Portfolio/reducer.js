@@ -8,7 +8,6 @@ const initialState = {
     portfolio: []
 }
 export const portfolioReducer = (state = initialState, action) => {
-    console.log("state ", state);
     switch (action.type) {
         case FETCH_PORTFOLIO: 
             return {
@@ -30,7 +29,7 @@ export const portfolioReducer = (state = initialState, action) => {
             }
         default:
             return {
-                ...initialState
+                ...state
             }
     }
 
