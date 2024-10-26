@@ -52,7 +52,7 @@ const TradingForm = ({ holding }) => {
                 </div>
                 <div>
                     <div className="flex items-center gap-2">
-                        <p> {(holding?.coinSymbol ?? "").toUpperCase()} </p>
+                        <p onClick={() => navigate(`/market/${holding?.holding?.coinId}`)} className=" font-medium cursor-pointer flex items-center gap-3 hover:text-slate-200 hover:underline"> {(holding?.coinSymbol ?? "").toUpperCase()} </p>
                         <DotIcon className="text-gray-400" />
                         <p className="text-gray-400"> {holding?.coinName} </p>
                     </div>

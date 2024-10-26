@@ -2,7 +2,6 @@ import { AvatarImage, Avatar } from "@/components/ui/avatar";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -11,11 +10,10 @@ import {
 import { useJWTToken } from "@/hooks/jwtToken";
 import { fetchPortfolio } from "@/store/Portfolio/action";
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import noResultPng from "../../assets/noResult.png";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import TradingForm from "./TradingForm";
 import { UpdateIcon } from "@radix-ui/react-icons";
@@ -27,6 +25,8 @@ const Portfolio = () => {
     const navigate = useNavigate();
     const portfolio = useSelector((store) => store.portfolio.portfolio);
     const fetchPortfolio1 = () => dispatch(fetchPortfolio(jwt, navigate));
+    const [open, setOpen] = useState(false);
+    const [selectedItem, selectItem] = useState("");
     useEffect(() => {
         fetchPortfolio1();
     }, [])
@@ -46,48 +46,47 @@ const Portfolio = () => {
                             <TableHead>INVESTED UNIT</TableHead>
                             <TableHead>INVESTED VALUE</TableHead>
                             <TableHead>CURRENT VALUE</TableHead>
-                            <TableHead>RETURN</TableHead>
-                            <TableHead className="text-right">SELL</TableHead>
+                            <TableHead className="text-right">RETURN</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {portfolio.map((item) => (
-                            <TableRow>
-                                <TableCell className="font-medium flex items-center gap-3">
-                                    <Avatar>
-                                        <AvatarImage src={item?.coinUrl}></AvatarImage>
-                                    </Avatar>
-                                    <span> {item?.coinName} </span>
-                                </TableCell>
-                                <TableCell className="text-left"> {item?.holding?.qty} </TableCell>
-                                <TableCell className="text-left"> {(item?.holding?.qty * item?.holding?.avgPrice).toFixed(2)}</TableCell>
-                                <TableCell className="text-left"> {(item?.currentValue).toFixed(2)}</TableCell>
-                                {item?.returnValue < 0 ? (
-                                    <TableCell className="flex gap-1 text-red-600"> <ArrowDownIcon color="red" /> {(item?.returnValue).toFixed(2)} ({(item?.returnValuePercentage)?.toFixed(2)}%) </TableCell>
-                                ) : (
-                                    <TableCell className="flex gap-1 text-green-600"> <ArrowUpIcon color="green" /> {(item?.returnValue).toFixed(2)} ({(item?.returnValuePercentage)?.toFixed(2)}%) </TableCell>
-                                )}
-                                <TableCell className="text-right">
-                                <Dialog>
-                                    <DialogTrigger>
-                                        <Button size="lg" variant="outline"> Sell</Button>
-                                    </DialogTrigger>
-                                    <DialogContent>
-                                        <DialogHeader>
-                                            <DialogTitle>Trade </DialogTitle>
-                                        </DialogHeader>
-                                        <TradingForm holding={item} />
-                                    </DialogContent>
-                                </Dialog>
-                                </TableCell>
-                                
-                            </TableRow>
+                            <>
+                                <TableRow className="cursor-pointer" onClick={() => {setOpen(!open); selectItem(item)}}>
+                                    <TableCell className="font-medium flex items-center gap-3">
+                                        <Avatar>
+                                            <AvatarImage src={item?.coinUrl}></AvatarImage>
+                                        </Avatar>
+                                        <span> {item?.coinName} </span>
+                                    </TableCell>
+                                    <TableCell className="text-left"> {item?.holding?.qty} </TableCell>
+                                    <TableCell className="text-left"> {(item?.holding?.qty * item?.holding?.avgPrice).toFixed(2)}</TableCell>
+                                    <TableCell className="text-left"> {(item?.currentValue).toFixed(2)}</TableCell>
+                                    {item?.returnValue < 0 ? (
+                                        <TableCell className="flex justify-end gap-1 text-red-600"> <ArrowDownIcon color="red" /> {(item?.returnValue).toFixed(2)} ({(item?.returnValuePercentage)?.toFixed(2)}%) </TableCell>
+                                    ) : (
+                                        <TableCell className="flex justify-end gap-1 text-green-600"> <ArrowUpIcon color="green" /> {(item?.returnValue).toFixed(2)} ({(item?.returnValuePercentage)?.toFixed(2)}%) </TableCell>
+                                    )}
+                                </TableRow>
+                                <div>
+                                    <Dialog open={open && selectedItem} onOpenChange={setOpen}>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>Trade </DialogTitle>
+                                            </DialogHeader>
+                                            <TradingForm holding={selectedItem} />
+                                        </DialogContent>
+                                    </Dialog>
+                                </div>
+                            </>
+                            
+                            
                         ))}
                     </TableBody>
                 </Table>
             ) : (
                 <div className="flex justify-center items-center mt-20 flex-col">
-                    <img className="w-[15%]" src={noResultPng}/>
+                    <img className="w-[15%]" src={noResultPng} />
                     <div className="text-lg mt-1">
                         Please invest and come back then!
                     </div>

@@ -9,12 +9,12 @@ import { LoaderContext } from './context.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <LoaderContext>
-      <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-      </BrowserRouter>
-    </LoaderContext>
+    <Provider store={store}>
+      <LoaderContext>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </LoaderContext>
+    </Provider>
   </StrictMode>,
 )
