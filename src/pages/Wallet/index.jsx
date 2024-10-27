@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { loadScript, logout } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const walletTxns = {
     add_funds: "Add Funds",
@@ -165,29 +166,31 @@ const Wallet = () => {
                         <UpdateIcon onClick={fetchWalletTxn} className="w-7 h-7 p-0 cursor-pointer hover:text-gray-400" />
                     </div>
                     <div className="space-y-5">
-                        {txns.map((item, idx) => (
-                            <div key={idx}>
-                                <Card className="px-5 flex justify-between items-center p-2">
-                                    <div className="flex items-center gap-5">
-                                        <Avatar>
-                                            <AvatarFallback>
-                                                <ShuffleIcon />
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <div className="space-y-1">
-                                            <h1> {walletTxns[item.walletTxnType]} </h1>
-                                            <p className="text-sm text-gray-500"> {item?.localDateTime}  </p>
+                        <ScrollArea className="h-[35vh]">
+                            {txns.map((item, idx) => (
+                                <div key={idx}>
+                                    <Card className="px-5 flex justify-between items-center p-2">
+                                        <div className="flex items-center gap-5">
+                                            <Avatar>
+                                                <AvatarFallback>
+                                                    <ShuffleIcon />
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <div className="space-y-1">
+                                                <h1> {walletTxns[item.walletTxnType]} </h1>
+                                                <p className="text-sm text-gray-500"> {item?.localDateTime}  </p>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div>
-                                        <p className={item?.amount >= 0 ? `text-green-500` : 'text-red-600'}>
-                                            {item?.amount} USD
-                                        </p>
-                                    </div>
-                                </Card>
-                            </div>
-                        ))}
+                                        <div>
+                                            <p className={item?.amount >= 0 ? `text-green-500` : 'text-red-600'}>
+                                                {item?.amount} USD
+                                            </p>
+                                        </div>
+                                    </Card>
+                                </div>
+                            ))}
+                        </ScrollArea>
                         {txns.length === 0 && (
                             <Button
                             variant="outline"

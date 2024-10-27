@@ -91,6 +91,7 @@ const TradingForm = ({ holding }) => {
                                     return;
                                 setAmount(Number(value));
                             }}
+                            onKeyDown={(e) => console.log("key ", e.key)}
                         />
                     </div>
                     <div className='flex py-4 items-center w-[100%] justify-between'>

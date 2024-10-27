@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import noResultPng from "../../assets/noResult.png";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const Activity = () => {
@@ -55,45 +56,48 @@ const Activity = () => {
             </h1>
             {activities.length ? (
                 <Table className="border">
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="py-5">Date & Time</TableHead>
-                            <TableHead>Coin</TableHead>
-                            <TableHead>ORDER TYPE</TableHead>
-                            <TableHead>TXN QTY</TableHead>
-                            <TableHead className="text-right">TXN VALUE</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {activities.map((item) => {
-                            const dateObject = new Date(item?.timeStamp);
+                    <ScrollArea className="h-[60vh]">
 
-                            // Extract the date and time
-                            const date = dateObject.toISOString().split('T')[0]; // "2024-10-26"
-                            const time = dateObject.toTimeString().split(' ')[0]; 
-                            return (
-                                <TableRow>
-                                    <TableCell className="text-left w-[200px">
-                                        <p> {date} </p>
-                                        <p className="text-gray-400"> {time} </p>
-                                    </TableCell>
-                                    <TableCell onClick={() => navigate(`/market/${item.coinId}`)} className="hover:text-white font-medium cursor-pointer flex items-center gap-3 text-slate-400 hover:underline">
-                                        <Avatar>
-                                            <AvatarImage src={JSON.parse(item.coinImg)} alt={`${item.coinId} logo`} />
-                                        </Avatar>
-                                        <span className=""> {(item.coinId ?? "").toUpperCase()} </span>
-                                    </TableCell>
+                        <TableHeader className="sticky top-0 bg-[#000] z-[20]">
+                            <TableRow>
+                                <TableHead className="py-5">Date & Time</TableHead>
+                                <TableHead>Coin</TableHead>
+                                <TableHead>ORDER TYPE</TableHead>
+                                <TableHead>TXN QTY</TableHead>
+                                <TableHead className="text-right">TXN VALUE</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {activities.map((item) => {
+                                const dateObject = new Date(item?.timeStamp);
 
-                                    <TableCell className="text-left">
-                                        <span className={`${item.orderType === "buy" ? "bg-green-600" : "bg-sky-600"} px-3 py-1 rounded-lg`}>
-                                            {item.orderType.toUpperCase()}
-                                        </span>
-                                    </TableCell>
-                                    <TableCell className="text-left"> {item.quantity}</TableCell>
-                                    <TableCell className="text-right"> {item.txnValue} $</TableCell>
-                                </TableRow>
-                        )})}
-                    </TableBody>
+                                // Extract the date and time
+                                const date = dateObject.toISOString().split('T')[0]; // "2024-10-26"
+                                const time = dateObject.toTimeString().split(' ')[0]; 
+                                return (
+                                    <TableRow>
+                                        <TableCell className="text-left w-[200px">
+                                            <p> {date} </p>
+                                            <p className="text-gray-400"> {time} </p>
+                                        </TableCell>
+                                        <TableCell onClick={() => navigate(`/market/${item.coinId}`)} className="hover:text-white font-medium cursor-pointer flex items-center gap-3 text-slate-400 hover:underline">
+                                            <Avatar>
+                                                <AvatarImage src={JSON.parse(item.coinImg)} alt={`${item.coinId} logo`} />
+                                            </Avatar>
+                                            <span className=""> {(item.coinId ?? "").toUpperCase()} </span>
+                                        </TableCell>
+
+                                        <TableCell className="text-left">
+                                            <span className={`${item.orderType === "buy" ? "bg-green-600" : "bg-sky-600"} px-3 py-1 rounded-lg`}>
+                                                {item.orderType.toUpperCase()}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell className="text-left"> {item.quantity}</TableCell>
+                                        <TableCell className="text-right"> ${item.txnValue}</TableCell>
+                                    </TableRow>
+                            )})}
+                        </TableBody>
+                    </ScrollArea>
                 </Table>
             ) : (
                 <div className="flex justify-center items-center mt-20 flex-col">

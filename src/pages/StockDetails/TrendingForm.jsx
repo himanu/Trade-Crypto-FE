@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-const TrendingForm = ({ coinDetail, wallet }) => {
+const TrendingForm = ({ coinDetail, wallet, open, setOpen }) => {
     const [amount, setAmount] = useState("");
     const {setLoading, loading} = useContext(loaderContext);
     const jwt = useJWTToken();
@@ -24,6 +24,7 @@ const TrendingForm = ({ coinDetail, wallet }) => {
 
     const handleBuyOrder = async () => {
         try {
+            setOpen(false);
             setLoading(true);
             const response = await axios.post(`${baseUrl}/order/buy?coinId=${coinDetail.id}&amount=${amount}`, null, {
                 headers: {
@@ -34,14 +35,15 @@ const TrendingForm = ({ coinDetail, wallet }) => {
                 type: WITHDRAW_MONEY_SUCCESS,
                 payload: wallet.balance - amount
             })
-            toast.success("Order Successfully executed!")
+            toast.success("Order Successfully executed!");
             setLoading(false);
         } catch(error) {
             setLoading(false);
             toast.error("Order failed!")
             if (error?.status === 401)
                 logout(navigate, dispatch);
-        } 
+        } finally {
+        }
     }
     return (
         <div className='space-y-10 p-5'>
@@ -82,7 +84,18 @@ const TrendingForm = ({ coinDetail, wallet }) => {
                             id="amount_input"
                             name="amount"
                             value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && amount && handleBuyOrder()}
+                            onChange={(e) => {
+                                const value = e?.target?.value;
+                                console.log("value ", value, "  ", !value);
+                                if (!value) {
+                                    setAmount("");
+                                    return;
+                                }
+                                if (isNaN(value))
+                                    return;
+                                setAmount(Number(value));
+                            }}
                         />
                     </div>
                     <div className='flex items-center w-[100%] justify-between'>
@@ -111,11 +124,9 @@ const TrendingForm = ({ coinDetail, wallet }) => {
                 </div>
             </div>
             <div>
-                <DialogClose className='w-full'>
-                    <Button disabled={amount > (wallet?.balance ?? 0) || !amount} onClick={handleBuyOrder} className={`markDepositTxnSuccessfulw-full w-[100%] py-6`}>
+                    <Button disabled={(amount > (wallet?.balance ?? 0)) || !amount} onClick={handleBuyOrder} className={`markDepositTxnSuccessfulw-full w-[100%] py-6`}>
                         BUY
                     </Button>
-                </DialogClose>
                 {amount > (wallet?.balance ?? 0) && (
                     <h1 className='absolute w-[100%] left-0 pb-4 text-red-600 text-center pt-2'>
                         Insufficient Balance!

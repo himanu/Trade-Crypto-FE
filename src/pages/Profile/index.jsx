@@ -17,6 +17,7 @@ const Profile = () => {
     const auth = useSelector((store) => store.auth);
     const {username, email} = auth?.user ?? {};
     const acitvate2StepVeri = () => {};
+    console.log("user ", auth.user)
     return (
         <div className="flex flex-col items-center mb-5">
             <div className="pt-10 w-full lg:w-[60%]">
@@ -46,24 +47,6 @@ const Profile = () => {
                                     <p className="text-gray-500"> {"Not Available"} </p>
                                 </div>
                             </div>
-                            <div className="space-y-7 lg:mt-0 mt-7">
-                            <div className="flex">
-                                    <p className="w-[9rem]"> Email : </p>
-                                    <p className="text-gray-500"> {email} </p>
-                                </div>
-                                <div className="flex">
-                                    <p className="w-[9rem]"> FullName : </p>
-                                    <p className="text-gray-500">{username} </p>
-                                </div>
-                                <div className="flex">
-                                    <p className="w-[9rem]"> DOB : </p>
-                                    <p className="text-gray-500"> {"Not Available"} </p>
-                                </div>
-                                <div className="flex">
-                                    <p className="w-[9rem]"> Nationality : </p>
-                                    <p className="text-gray-500"> {"Not Available"} </p>
-                                </div>
-                            </div>
                         </div>
                     </CardContent>
                 </Card>
@@ -73,7 +56,7 @@ const Profile = () => {
                         <CardHeader className="pb-7">
                             <div className="flex items-center gap-3">
                                 <CardTitle> 2 Step Verification</CardTitle>
-                                {false ? (
+                                {true ? (
                                     <Badge className="bg-orange-500 text-white"> Disabled  </Badge>
                                 ) : (
                                     <Badge className="bg-green-500 space-x-2 text-white">

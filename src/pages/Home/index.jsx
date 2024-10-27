@@ -21,9 +21,7 @@ import { useNavigate } from "react-router-dom";
 
 const filterCategories = [
     { text: "All", name: "all" },
-    { text: "Top 50", name: "top50" },
-    { text: "Top Gainers", name: "topGainers" },
-    { text: "Top Loosers", name: "topLoosers" },
+    { text: "Top 50", name: "top50" }
 ]
 const Home = () => {
     const [category, setCategory] = useState(filterCategories[0].name);

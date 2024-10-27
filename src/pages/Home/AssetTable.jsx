@@ -11,9 +11,13 @@ import {
 } from "@/components/ui/table"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import numeral from 'numeral';
 
 const AssetTable = ({coins}) => {
     const navigate = useNavigate();
+    const formatNumber = (number) => {
+        return numeral(number).format('0.0a').toUpperCase();
+    }
     return (
         <Table>
             <ScrollArea className="h-[70vh]">
@@ -23,7 +27,7 @@ const AssetTable = ({coins}) => {
                         <TableHead>SYMBOL</TableHead>
                         <TableHead>VOLUME</TableHead>
                         <TableHead>MARKET CAP</TableHead>
-                        <TableHead>24h</TableHead>
+                        <TableHead>24H CHANGE</TableHead>
                         <TableHead className="text-right">PRICE</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -37,9 +41,9 @@ const AssetTable = ({coins}) => {
                                 <span> {item.name} </span>
                             </TableCell>
                             <TableCell className="text-left">{(item?.symbol ?? "").toUpperCase()}</TableCell>
-                            <TableCell className="text-left"> {item.total_volume} </TableCell>
-                            <TableCell className="text-left"> {item.market_cap} </TableCell>
-                            <TableCell className="text-left"> {item?.price_change_percentage_24h} </TableCell>
+                            <TableCell className="text-left"> ${formatNumber(item.total_volume)} </TableCell>
+                            <TableCell className="text-left"> ${formatNumber(item.market_cap)}  </TableCell>
+                            <TableCell className={`${item?.price_change_percentage_24h >= 0 ? "text-green-600" : "text-red-600"} text-left`}> {item?.price_change_percentage_24h.toFixed(2)}% </TableCell>
                             <TableCell className="text-right">${item?.current_price}</TableCell>
                         </TableRow>
                     ))}
