@@ -12,7 +12,7 @@ import { CopyIcon, DownloadIcon, ReloadIcon, ShuffleIcon, UpdateIcon, UploadIcon
 import { DollarSign, WalletIcon } from "lucide-react";
 import TopUpForm from "./TopUpForm";
 import WithdrawalForm from "./WithdrawalForm";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUserWallet, getWalletTxns, markDepositTxnSuccessful } from "@/store/Wallet/action";
@@ -30,8 +30,8 @@ const walletTxns = {
     add_funds: "Add Funds",
     withdraw_funds: "Withdraw Funds",
     transfer_funds: "Transfer Funds",
-    bought_asset: "Bought Coins",
-    sold_asset: "Sold Coins"
+    bought_asset: "Bought",
+    sold_asset: "Sold"
 }
 const Wallet = () => {
     const dispatch = useDispatch();
@@ -177,7 +177,13 @@ const Wallet = () => {
                                                 </AvatarFallback>
                                             </Avatar>
                                             <div className="space-y-1">
-                                                <h1> {walletTxns[item.walletTxnType]} </h1>
+                                                <h1 className="flex gap-1 items-center"> 
+                                                    <span> {walletTxns[item.walletTxnType]}  </span>
+                                                    <span> {JSON.parse(item?.coinName)}</span>
+                                                    <Avatar className="w-[25px] h-[25px]">
+                                                        <AvatarImage src={JSON.parse(item.coinImg)} alt={`${item.coinName} logo`} />
+                                                    </Avatar>
+                                                </h1>
                                                 <p className="text-sm text-gray-500"> {item?.localDateTime}  </p>
                                             </div>
                                         </div>

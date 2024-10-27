@@ -52,7 +52,7 @@ const Portfolio = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {[...portfolio, ...portfolio].map((item) => (
+                            {[...portfolio].map((item) => (
                                 <>
                                     <TableRow className="cursor-pointer" onClick={() => {setOpen(!open); selectItem(item)}}>
                                         <TableCell className="font-medium flex items-center gap-3">
