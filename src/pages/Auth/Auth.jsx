@@ -52,15 +52,10 @@ const Auth = () => {
             ) : (
               <section className='w-[80%] lg:w-[35%]'>
                 <Signin />
-                <div className='flex mt-2 gap-2 items-center justify-center'>
+                <div className='flex mt-6 gap-2 items-center justify-center'>
                   <span> Don't have account? </span>
                   <Button onClick={() => navigate("/auth/signup")} variant="secondary">
                     Sign Up
-                  </Button>
-                </div>
-                <div className='mt-4'>
-                  <Button className="w-full py-5" onClick={() => navigate("/auth/forgot-password")} variant="outline">
-                    Forgot Password
                   </Button>
                 </div>
               </section>

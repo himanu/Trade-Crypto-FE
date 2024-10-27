@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCoinDetails } from "@/store/Coin/action";
 import { useJWTToken } from "@/hooks/jwtToken";
 import { getUserWallet } from "@/store/Wallet/action";
+import { toast } from "react-toastify";
   
 const timeSeries = [
     {
@@ -63,6 +64,7 @@ const StockDetails = () => {
 
     useEffect(() => {
         Object.keys(wallet).length === 0 && fetchWallet();
+        return () => toast.dismiss();
     }, [])
 
     const {change = 0, percentageChange = 0} = useMemo(() => {

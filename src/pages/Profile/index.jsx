@@ -1,23 +1,46 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { VerifiedIcon } from "lucide-react";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
-import Enable2StepVerif from "./Enable2StepVerif";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useContext, useState } from "react";
+import Loader from "@/components/ui/loader";
+import { loaderContext } from "@/context";
+import axios from "axios";
+import { baseUrl } from "@/constants";
+import { useJWTToken } from "@/hooks/jwtToken";
+import { GET_USER_SUCCESS } from "@/store/Auth/actionTypes";
+import { logout } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
   
 
 const Profile = () => {
     const auth = useSelector((store) => store.auth);
     const {username, email} = auth?.user ?? {};
-    const acitvate2StepVeri = () => {};
-    console.log("user ", auth.user)
+    const {setLoading} = useContext(loaderContext);
+    const jwtToken = useJWTToken();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const acitvate2StepVeri = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.put(`${baseUrl}/enable_2fa`, null, {
+                headers: {
+                    Authorization: `Bearer ${jwtToken}`
+                }
+            });
+
+            dispatch({type: GET_USER_SUCCESS, payload: response?.data});
+        } catch (err) {
+            if (err.status === 401) {
+                logout(navigate, dispatch);
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+    const is2FactorAuthEnabled = auth?.user?.twoFactorAuth?.enabled;
+
     return (
         <div className="flex flex-col items-center mb-5">
             <div className="pt-10 w-full lg:w-[60%]">
@@ -56,8 +79,8 @@ const Profile = () => {
                         <CardHeader className="pb-7">
                             <div className="flex items-center gap-3">
                                 <CardTitle> 2 Step Verification</CardTitle>
-                                {true ? (
-                                    <Badge className="bg-orange-500 text-white"> Disabled  </Badge>
+                                {!is2FactorAuthEnabled ? (
+                                    <Badge className="bg-orange-500 text-white"> Not Enabled  </Badge>
                                 ) : (
                                     <Badge className="bg-green-500 space-x-2 text-white">
                                         <VerifiedIcon />
@@ -68,22 +91,13 @@ const Profile = () => {
                                 )}
                             </div>
                         </CardHeader>
-                        <CardContent>
-                            <div>
-                                <Dialog>
-                                    <DialogTrigger>
-                                        <Button> Enable Two Step Verification</Button>
-                                    </DialogTrigger>
-                                    <DialogContent>
-                                        <DialogHeader>
-                                            <DialogTitle>Verify your account</DialogTitle>
-                                        </DialogHeader>
-                                        <Enable2StepVerif email={email} handleSubmit={acitvate2StepVeri} />
-                                    </DialogContent>
-                                </Dialog>
-
-
+                       <CardContent>
+                            {!is2FactorAuthEnabled ? ( <div>
+                                <Button onClick={acitvate2StepVeri}> 
+                                    Enable Two Step Verification
+                                </Button>
                             </div>
+                            ): <div> Your Two Step Verification is Enabled</div>}
                         </CardContent>
                     </Card>
                 </div>

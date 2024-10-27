@@ -48,6 +48,7 @@ const Activity = () => {
 
     useEffect(() => {
         fetchActivity()
+        return () => toast.dismiss();
     }, []);
     return (
         <div className="p-5 lg:px-20">

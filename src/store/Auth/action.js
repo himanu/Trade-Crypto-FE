@@ -22,13 +22,18 @@ export const register = (userData) => async (dispatch) => {
 
 
 
-export const login = (userData) => async (dispatch) => {
+export const login = (userData, setOtpScreen) => async (dispatch) => {
     dispatch({
         type: LOGIN
     })
     try {
         const response = await axios.post(`${baseUrl}/login`, userData);
         const user = response.data;
+        if (user?.is2FAEnabled) {
+            setOtpScreen(true);
+            dispatch({type: LOGIN_SUCCESS, payload: {}});
+            return;
+        }
         dispatch({type: LOGIN_SUCCESS, payload: user});
         localStorage.setItem("token", user?.token)
     } catch(error) {

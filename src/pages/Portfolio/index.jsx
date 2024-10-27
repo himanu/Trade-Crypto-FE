@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import TradingForm from "./TradingForm";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "react-toastify";
 
 
 const Portfolio = () => {
@@ -30,6 +31,7 @@ const Portfolio = () => {
     const [selectedItem, selectItem] = useState("");
     useEffect(() => {
         fetchPortfolio1();
+        return () => toast.dismiss();
     }, [])
     return (
         <div className="p-5 lg:px-20">

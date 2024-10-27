@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDispatch } from 'react-redux'
 import { register } from '@/store/Auth/action'
+import { toast } from 'react-toastify'
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,10 @@ const Signup = () => {
   const onSubmit = (data) => {
     dispatch(register(data));
   }
+  useEffect(() => () => toast.dismiss(), []);
   return (
     <div>
-      <h1 className='text-xl font-bold text-center pb-4'> Sign Up</h1>
+      <h1 className='text-2xl font-bold text-center pb-4'> Sign Up</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}
           className='space-y-6'

@@ -48,6 +48,7 @@ const Wallet = () => {
     useEffect(() => {
         fetchWallet();
         fetchWalletTxn();
+        return () => toast.dismiss();
     }, [])
 
     const handleSubmit = async (amount) => {
