@@ -21,7 +21,7 @@ const AssetTable = ({coins}) => {
     return (
         <Table>
             <ScrollArea className="h-[70vh]">
-                <TableHeader className="sticky top-0 bg-[#000] z-[20]">
+                <TableHeader style={{ backgroundColor: 'hsl(212.2, 84%, 4.9%)' }} className="sticky top-0 z-[20]">
                     <TableRow>
                         <TableHead className="w-[100px]">Coin</TableHead>
                         <TableHead>SYMBOL</TableHead>

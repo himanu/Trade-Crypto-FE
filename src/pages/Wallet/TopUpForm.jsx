@@ -39,7 +39,18 @@ const TopUpForm = ({ handleSubmit }) => {
                 </h1>
 
                 <Input
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(e) => {
+                        const value = e?.target?.value;
+                        console.log("value ", value, "  ", !value);
+                        if (!value) {
+                            setAmount("");
+                            return;
+                        }
+                        if (isNaN(value) || value >= 5000)
+                            return;
+                        setAmount(Number(value));
+                    }}
+                    
                     className="py-5 text-lg"
                     value={amount}
                     placeholder="Enter Amount less than 5000$"

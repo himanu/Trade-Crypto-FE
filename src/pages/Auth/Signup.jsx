@@ -6,9 +6,11 @@ import { Input } from '@/components/ui/input'
 import { useDispatch } from 'react-redux'
 import { register } from '@/store/Auth/action'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const form = useForm({
     resolver: "",
     defaultValues: {
@@ -18,9 +20,9 @@ const Signup = () => {
     }
   })
   const onSubmit = (data) => {
-    dispatch(register(data));
+    dispatch(register(data, navigate));
   }
-  useEffect(() => () => toast.dismiss(), []);
+  // useEffect(() => () => toast.dismiss(), []);
   return (
     <div>
       <h1 className='text-2xl font-bold text-center pb-4'> Sign Up</h1>

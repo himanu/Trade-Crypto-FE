@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { logout } from "@/lib/utils";
 
 
-export const register = (userData) => async (dispatch) => {
+export const register = (userData, navigate) => async (dispatch) => {
     dispatch({
         type: REGISTER
     })
@@ -14,6 +14,7 @@ export const register = (userData) => async (dispatch) => {
         const user = response.data;
         dispatch({type: REGISTER_SUCCESS, payload: user});
         toast.success("Signed Up Successfully!");
+        navigate("/auth/login")
     } catch(error) {
         dispatch({type: REGISTER_FAILURE, payload: error.message});
         toast.error(error?.response?.data ?? error?.message ?? "Something Went Wrong!");

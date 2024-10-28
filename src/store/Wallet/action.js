@@ -54,7 +54,7 @@ export const getWalletTxns = (jwt, navigate) => async (dispatch) => {
     }
 }
 
-export const markDepositTxnSuccessful = (data, jwt, navigate) => async (dispatch) => {
+export const markDepositTxnSuccessful = (data, jwt, navigate, fetchWalletTxn) => async (dispatch) => {
     try {
         dispatch({
             type: DEPOSIT_MONEY
@@ -70,6 +70,7 @@ export const markDepositTxnSuccessful = (data, jwt, navigate) => async (dispatch
             type: DEPOSIT_MONEY_SUCCESS,
             payload: resposne?.data?.amount
         })
+        fetchWalletTxn();
         toast.success("Successfully Added funds")
 
     } catch (err) {
@@ -84,7 +85,7 @@ export const markDepositTxnSuccessful = (data, jwt, navigate) => async (dispatch
     
 }
 
-export const withdrawMoney = (amount, jwt, navigate) => async (dispatch) => {
+export const withdrawMoney = (amount, jwt, navigate, callback) => async (dispatch) => {
     try {
         dispatch({
             type: WITHDRAW_MONEY
@@ -98,6 +99,7 @@ export const withdrawMoney = (amount, jwt, navigate) => async (dispatch) => {
             type: WITHDRAW_MONEY_SUCCESS,
             payload: response?.data?.balance
         })
+        callback();
         toast.success("Successfully processed your withdrawal request")
     } catch (err) {
         dispatch({

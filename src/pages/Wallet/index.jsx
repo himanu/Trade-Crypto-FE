@@ -27,8 +27,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const walletTxns = {
-    add_funds: "Add Funds",
-    withdraw_funds: "Withdraw Funds",
+    add_funds: "Added Funds",
+    withdraw_funds: "Withdrew Funds",
     transfer_funds: "Transfer Funds",
     bought_asset: "Bought",
     sold_asset: "Sold"
@@ -83,7 +83,7 @@ const Wallet = () => {
                     razorpayOrderId: response?.razorpay_order_id,
                     razorpayPaymentId: response?.razorpay_payment_id,
                     razorpaySignature: response?.razorpay_signature
-                }, token, navigate));
+                }, token, navigate, fetchWalletTxn));
             },
             "prefill": { 
                 "name": user?.username,
@@ -167,7 +167,16 @@ const Wallet = () => {
                         <UpdateIcon onClick={fetchWalletTxn} className="w-7 h-7 p-0 cursor-pointer hover:text-gray-400" />
                     </div>
                     <div className="space-y-5">
-                        <ScrollArea className="h-[35vh]">
+                        
+                        {txns.length === 0 ? (
+                            <Button
+                            variant="outline"
+                            className="w-full flex item-center py-6 gap-4 cursor-default"
+                        >
+                            No Transactions!
+                        </Button>
+                        ): (
+                            <ScrollArea className="h-[35vh]">
                             {txns.map((item, idx) => (
                                 <div key={idx}>
                                     <Card className="px-5 flex justify-between items-center p-2">
@@ -198,14 +207,7 @@ const Wallet = () => {
                                 </div>
                             ))}
                         </ScrollArea>
-                        {txns.length === 0 && (
-                            <Button
-                            variant="outline"
-                            className="w-full flex item-center py-6 gap-4 cursor-default"
-                        >
-                            No Transactions!
-                        </Button>
-                        )}
+                        ) }
                     </div>
                 </div>
             </div>

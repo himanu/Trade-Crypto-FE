@@ -62,13 +62,12 @@ const OTPScreen = ({email, setOtpScreen}) => {
     }
   }, [value]);
 
-  useEffect(() => {
-    return () => toast.dismiss();
-  }, [])
+  useEffect(() => () => toast.dismiss())
+
   return (
     <>
       <h1 className='text-2xl font-bold text-center pb-2'> Verify OTP</h1>
-      <div className='text-center mb-4 flex'>
+      <div className='text-center justify-center mb-4 flex'>
         <span> An OTP has been sent to Email </span>
         <span className='text-blue-500 ml-[3px]'> {email} </span> 
         <span className='italic underline cursor-pointer ml-[2px]' onClick={() => setOtpScreen(false)}> <EditIcon className='text-blue-500 hover:text-blue-600 underline' width={"20px"}/> </span>
@@ -109,6 +108,9 @@ const SignIn = () => {
   const onSubmit = (data) => {
     dispatch(login(data, setOtpScreen));
   }
+  useEffect(() => {
+    // return () => toast.dismiss();
+  }, [])
 
   return (
     <div>

@@ -21,7 +21,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 
 const Activity = () => {
-    const { setLoading } = useContext(loaderContext);
+    const { loading, setLoading } = useContext(loaderContext);
     const [activities, setActivities] = useState([]);
     const jwt = useJWTToken();
     const dispatch = useDispatch();
@@ -55,11 +55,11 @@ const Activity = () => {
             <h1 className="pb-5 font-bold text-3xl">
                 Activity
             </h1>
-            {activities.length ? (
-                <Table className="border">
+            {activities.length || loading ? (
+                <Table>
                     <ScrollArea className="h-[60vh]">
 
-                        <TableHeader className="sticky top-0 bg-[#000] z-[20]">
+                        <TableHeader style={{ backgroundColor: 'hsl(212.2, 84%, 4.9%)' }} className="sticky top-0 z-[20]">
                             <TableRow>
                                 <TableHead className="py-5">Date & Time</TableHead>
                                 <TableHead>Coin</TableHead>

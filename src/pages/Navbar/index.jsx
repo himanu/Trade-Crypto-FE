@@ -112,7 +112,7 @@ const Navbar = () => {
                             <SheetTitle>
                                 <div className="flex items-center">
                                     <Avatar className="h-[auto] w-[auto]">
-                                        <AvatarImage className='w-[4rem] h-[3rem]' src="https://cdn.pixabay.com/photo/2020/03/08/16/03/bitcoin-4912864_1280.jpg" />
+                                        <AvatarImage className='w-[4.5rem] h-[3rem]' src="https://cdn.pixabay.com/photo/2020/03/08/16/03/bitcoin-4912864_1280.jpg" />
                                     </Avatar>
                                     <div>
                                         <span className="font-bold text-orange-700 mr-2">Trade</span>

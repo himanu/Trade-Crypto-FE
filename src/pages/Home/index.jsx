@@ -78,7 +78,7 @@ const Home = () => {
                     }
                 </div>
             </div>
-            <section className="absolute bottom-5 right-5 z-40 flex flex-col justify-end items-end gap-2">
+            {/* <section className="absolute bottom-5 right-5 z-40 flex flex-col justify-end items-end gap-2">
                 {isBotOpen && (
                     <div className="rounded-md w-[20rem] md:w-[25rem] lg:w-[25rem] 
                         h-[70vh] bg-slate-900"
@@ -126,7 +126,7 @@ const Home = () => {
                         <span className="text-2xl"> Chat Bot </span>
                     </Button>
                 </div>
-            </section>
+            </section> */}
         </div>
     )
 };

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input'
 import { useJWTToken } from '@/hooks/jwtToken';
-import { withdrawMoney } from '@/store/Wallet/action';
+import { getWalletTxns, withdrawMoney } from '@/store/Wallet/action';
 import { DialogClose } from '@radix-ui/react-dialog';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ const WithdrawalForm = ({balance}) => {
   const jwt = useJWTToken();
   const navigate = useNavigate();
   const handleWithdraw = () => {
-    dispatch(withdrawMoney(amount, jwt, navigate));
+    dispatch(withdrawMoney(amount, jwt, navigate, () => dispatch(getWalletTxns(jwt, navigate))));
   }
   return (
     <div className='pt-5 space-y-5'>
